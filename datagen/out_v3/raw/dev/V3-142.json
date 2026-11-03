@@ -1,0 +1,88 @@
+{
+  "scenario_id": "V3-142",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": null,
+  "customer_phone": "0971978246",
+  "customer_name": "Vy",
+  "honorific": "chị",
+  "notes": "Mẹ & bé: tuổi bé và phản đối giá ở cuộc 1 phải được dùng ở cuộc 2 (không hỏi lại tuổi bé). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-14",
+      "customer_goal": "hoi SKU-MB-STR1 cho be",
+      "customer_turns": [
+        "Bé nhà chị 2 tháng, chị đang xem Joie Pact.",
+        "Giá 3 triệu 490 hơi cao so với chị tính.",
+        "Để chị hỏi chồng rồi gọi lại em nha."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STR1",
+        "price_quoted_vnd": 3490000,
+        "baby_age": "2 tháng",
+        "objection": "dat_qua",
+        "blocker": "can hoi chong"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 3490000,
+        "freeship": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 2,
+      "customer_turns": [
+        "Chồng chị bảo mua đi, mà có quà hay ưu đãi gì không em?",
+        "Ok lên đơn cho chị, giao 13 Lê Lợi, TP Bắc Ninh, Bắc Ninh, trả khi nhận."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "baby_age",
+        "objection"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "baby_age"
+      ],
+      "facts_established": {
+        "address": "13 Lê Lợi, TP Bắc Ninh, Bắc Ninh",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-STR1",
+          "price_vnd": 3490000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 3490000,
+        "in_stock": true,
+        "freeship": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-me-be-tuoi-be-phan-doi-dev",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N398",
+    "synthetic_customer": true,
+    "address": "13 Lê Lợi, TP Bắc Ninh, Bắc Ninh",
+    "dates": {
+      "call_1": "2026-10-14",
+      "call_2": "2026-10-16"
+    },
+    "choices": {
+      "cust": "N398",
+      "p": "SKU-MB-STR1",
+      "d1": "2026-10-14",
+      "gap": 2,
+      "age": "2 tháng"
+    }
+  }
+}

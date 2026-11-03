@@ -1,0 +1,150 @@
+{
+ "scenario_id": "V3-059",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "3_phien_thong_tin_thay_doi",
+ "customer_phone": "0932270627",
+ "customer_name": "Liên",
+ "honorific": "cô",
+ "notes": "Địa chỉ đổi ở phiên 3 khi đơn chưa giao (dự kiến 2026-10-24): phải cập nhật đơn và bộ nhớ, địa chỉ cũ bị thay thế. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-17",
+   "customer_goal": "hoi SKU-AP-Y",
+   "customer_turns": [
+    "Em ơi AirPure Y giá bao nhiêu vậy?",
+    "Cô ở 189 Phan Đình Phùng, Quy Nhơn, Bình Định, giao thì mất mấy ngày em?",
+    "Để cô về bàn với nhà rồi tính."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AP-Y",
+    "price_quoted_vnd": 5200000,
+    "address": "189 Phan Đình Phùng, Quy Nhơn, Bình Định",
+    "blocker": "ban voi nha"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5200000,
+    "in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 3,
+   "customer_turns": [
+    "Nhà cô chịu rồi em, lên đơn AirPure Y hôm bữa giúp cô nhé.",
+    "Giao về chỗ cũ hôm trước, nhận hàng cô trả tiền."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "address"
+   ],
+   "must_not_ask": [
+    "product_advised",
+    "address"
+   ],
+   "facts_established": {
+    "order_id": "OD600001",
+    "payment": "COD",
+    "product_advised": "SKU-AP-Y"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-AP-Y",
+     "price_vnd": 5200000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5200000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_3": {
+   "days_later": 1,
+   "customer_turns": [
+    "Em ơi, đơn AirPure Y của cô đi chưa em?",
+    "Cô vừa chuyển nhà, em đổi địa chỉ giao sang 17 Phạm Ngọc Thạch, Đống Đa, Hà Nội giùm cô nha."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised",
+    "payment"
+   ],
+   "facts_established": {
+    "address": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội"
+   },
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "update_address"
+    },
+    "max_agent_questions": 1
+   },
+   "memory_expectation": {
+    "address": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội",
+    "superseded": "189 Phan Đình Phùng, Quy Nhơn, Bình Định"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-ba-phien-doi-dia-chi-don-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N065",
+  "synthetic_customer": true,
+  "address": "189 Phan Đình Phùng, Quy Nhơn, Bình Định",
+  "dates": {
+   "call_1": "2026-10-17",
+   "call_2": "2026-10-20",
+   "call_3": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N065",
+   "p": "SKU-AP-Y",
+   "d1": "2026-10-17",
+   "g1": 3,
+   "g2": 1,
+   "addr_b": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ],
+   "call_3": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho cô hỏi AirPure Y giá bao nhiêu em?",
+    "Nhà cô ở 189 Phan Đình Phùng, Quy Nhơn, Bình Định, giao mất mấy ngày?",
+    "Để cô bàn với nhà đã."
+   ],
+   "call_2": [
+    "Nhà cô đồng ý rồi, lên đơn AirPure Y hôm trước nhé em.",
+    "Giao về địa chỉ hôm trước, trả tiền khi nhận."
+   ],
+   "call_3": [
+    "Em ơi đơn AirPure Y của cô giao chưa em?",
+    "Cô mới chuyển chỗ ở, em đổi giao về 17 Phạm Ngọc Thạch, Đống Đa, Hà Nội giúp cô nhé."
+   ]
+  }
+ }
+}

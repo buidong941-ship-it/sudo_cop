@@ -1,0 +1,71 @@
+{
+ "scenario_id": "V3-073",
+ "level": "M2",
+ "persona": "khach_hoi_ngoai_tai_lieu",
+ "hard_case": "ngoai_tai_lieu",
+ "customer_phone": "0939567116",
+ "customer_name": "Liên",
+ "honorific": "cô",
+ "notes": "Câu hỏi 'Mua bên em có được tích điểm thành viên không em?' không có trong policy/ hay catalog: phải nói không có thông tin, không tự khẳng định. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-20",
+   "customer_goal": "hoi SKU-AP-Y va dich vu ngoai tai lieu",
+   "customer_turns": [
+    "AirPure Y giờ giá sao em?",
+    "Mua ở đây có được tích điểm thành viên không em?",
+    "Vậy để cô suy nghĩ thêm."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AP-Y",
+    "price_quoted_vnd": 5200000
+   },
+   "success_if": {
+    "tool_called": null,
+    "agent_must_say": "không có thông tin",
+    "forbidden_claims": [
+     {
+      "field": "loyalty_points",
+      "value": "*any*"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5200000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-ngoai-tai-lieu-dich-vu-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N123",
+  "synthetic_customer": true,
+  "address": "2 Lê Lợi, TP Bắc Ninh, Bắc Ninh",
+  "dates": {
+   "call_1": "2026-10-20"
+  },
+  "choices": {
+   "cust": "N123",
+   "p": "SKU-AP-Y",
+   "d1": "2026-10-20",
+   "v": 2
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho cô hỏi AirPure Y giá bao nhiêu em?",
+    "Mua bên em có được tích điểm thành viên không em?",
+    "Ừ vậy cô biết rồi, để cô tính."
+   ]
+  }
+ }
+}

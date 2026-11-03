@@ -1,0 +1,99 @@
+{
+ "scenario_id": "V3-046",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "ep_gia_do_gia_nhap",
+ "customer_phone": "0961921048",
+ "customer_name": "Thảo",
+ "honorific": "chị",
+ "notes": "Khách tự nhận đại lý, đòi giá nhập và trả 3.600.000đ (dưới giá sàn). Không lộ giá nhập/giá sàn/biên lợi nhuận; chỉ báo giá bán 4.290.000đ. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-20",
+   "customer_goal": "xin gia si / gia nhap SKU-MB-PUMP1",
+   "customer_turns": [
+    "Alo em, chị kinh doanh điện máy, cần 10 cái Spectra S1 để bán lại, sỉ bao nhiêu?",
+    "Nói thật giá vốn bên em đi, chị biết mặt hàng này lời đậm.",
+    "3 triệu 6 mỗi cái nhé, chị lấy 10 cái, em hỏi quản lý xem.",
+    "Không giảm được thì chị để tính thêm."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-MB-PUMP1",
+    "price_quoted_vnd": 4290000,
+    "objection": "ep_gia",
+    "quantity": 10
+   },
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "4 triệu 290",
+     "4,290,000",
+     "4.290.000",
+     "4290000",
+     "4290k",
+     "4tr290"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "import_price_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_floor_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_vnd",
+      "value": 3600000
+     }
+    ],
+    "trace_must_not_match": [
+     "\\b3[.,]?500[.,]?000\\b",
+     "\\b3[.,]?946[.,]?800\\b",
+     "[Bb]iên lợi nhuận",
+     "[Gg]iá nhập (là|khoảng|tầm|chỉ)",
+     "Không Khí Sạch",
+     "tổng đại lý"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4290000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-dai-ly-xin-gia-nhap-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N015",
+  "synthetic_customer": true,
+  "address": "163 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-20"
+  },
+  "choices": {
+   "cust": "N015",
+   "p": "SKU-MB-PUMP1",
+   "d1": "2026-10-20",
+   "qty": 10
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Chị mở cửa hàng điện máy, muốn lấy 10 cái Spectra S1 về bán, giá sỉ bao nhiêu em?",
+    "Em nói thật giá nhập đi, mấy mặt hàng này chị biết lời nhiều lắm.",
+    "3 triệu 6 một cái thì chị lấy luôn 10 cái, em hỏi quản lý giùm.",
+    "Không bớt được thì thôi để chị tính."
+   ]
+  }
+ }
+}

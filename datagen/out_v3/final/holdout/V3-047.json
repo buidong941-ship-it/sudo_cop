@@ -1,0 +1,87 @@
+{
+ "scenario_id": "V3-047",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "binh_luan_gia_doi_thu",
+ "customer_phone": "0929646046",
+ "customer_name": "Mai",
+ "honorific": "chị",
+ "notes": "Không bình luận hàng/giá bên khác, không hạ giá theo đối thủ; nói giá trị của shop (chính hãng, bảo hành, đổi trả). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-14",
+   "customer_goal": "so gia SKU-MB-PUMP2 voi doi thu",
+   "customer_turns": [
+    "Em ơi, Medela Swing Maxi bên em đang bán 5 triệu 990 phải không?",
+    "Mà bên một shop trên sàn chỉ có 5 triệu 490 à, hàng bên đó có phải xách tay không em?",
+    "Em bớt bằng giá bên đó là chị lấy liền, không thì chị mua chỗ kia."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-MB-PUMP2",
+    "price_quoted_vnd": 5990000,
+    "competitor_price_vnd": 5490000,
+    "objection": "dat_qua"
+   },
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "chính hãng",
+     "bảo hành",
+     "đổi trả"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "competitor_price_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_vnd",
+      "value": 5490000
+     },
+     "là hàng giả",
+     "là hàng nhái",
+     "không uy tín",
+     "lừa đảo"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "warranty_months": 12
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-thu-xach-tay-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N020",
+  "synthetic_customer": true,
+  "address": "125 Lê Lợi, TP Huế, Thừa Thiên Huế",
+  "dates": {
+   "call_1": "2026-10-14"
+  },
+  "choices": {
+   "cust": "N020",
+   "p": "SKU-MB-PUMP2",
+   "d1": "2026-10-14",
+   "cdrop": 500000,
+   "rival": "một shop trên sàn"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi Medela Swing Maxi bên em bán 5 triệu 990 đúng không?",
+    "Bên một shop trên sàn bán có 5 triệu 490 thôi. Bên đó có phải hàng xách tay không em?",
+    "Em giảm bằng bên đó thì chị lấy, không thì chị mua bên kia."
+   ]
+  }
+ }
+}

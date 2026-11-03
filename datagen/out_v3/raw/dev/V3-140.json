@@ -1,0 +1,113 @@
+{
+  "scenario_id": "V3-140",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": null,
+  "customer_phone": "0927495368",
+  "customer_name": "Hằng",
+  "honorific": "cô",
+  "notes": "refund_vnd = 890.000đ phải nhớ từ phiên trả hàng để trả lời ở phiên 3. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-17",
+      "customer_goal": "mua SKU-SN-CAS-40-DEN",
+      "customer_turns": [
+        "Lấy cho cô Urban Classic size 40 màu đen em nhé.",
+        "Giao về 32 Hùng Vương, Tam Kỳ, Quảng Nam, COD."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-CAS",
+        "variant_sku": "SKU-SN-CAS-40-DEN",
+        "price_quoted_vnd": 890000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "32 Hùng Vương, Tam Kỳ, Quảng Nam"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 6,
+      "customer_turns": [
+        "Em ơi hàng cô nhận rồi nhưng không như hình, cô trả lại nhé.",
+        "Hoàn tiền bao lâu vậy em?"
+      ],
+      "must_carry_over": [
+        "order_id"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "facts_established": {
+        "refund_vnd": 890000
+      },
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "return"
+        },
+        "must_say_any": [
+          "3-5 ngày",
+          "3 đến 5 ngày",
+          "3–5 ngày",
+          "ba đến năm ngày"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_vnd": 890000,
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_3": {
+      "days_later": 2,
+      "customer_turns": [
+        "Tiền hoàn của cô là bao nhiêu vậy em, cô quên rồi?",
+        "Ừ cảm ơn em."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "refund_vnd"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "890,000",
+          "890.000",
+          "890000",
+          "890k"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hoi-tien-hoan-dev",
+    "instance": 5,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N392",
+    "synthetic_customer": true,
+    "address": "32 Hùng Vương, Tam Kỳ, Quảng Nam",
+    "dates": {
+      "call_1": "2026-10-17",
+      "call_2": "2026-10-23",
+      "call_3": "2026-10-25"
+    },
+    "choices": {
+      "cust": "N392",
+      "p": "SKU-SN-CAS-40-DEN",
+      "d1": "2026-10-17",
+      "g1": 6,
+      "g2": 2
+    }
+  }
+}

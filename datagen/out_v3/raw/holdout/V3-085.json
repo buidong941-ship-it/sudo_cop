@@ -1,0 +1,97 @@
+{
+  "scenario_id": "V3-085",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": null,
+  "customer_phone": "0978946060",
+  "customer_name": "Tuấn",
+  "honorific": "anh",
+  "notes": "Đổi SKU-JK-DWN-M-BE → SKU-JK-DWN-L-BE, lần đổi đầu tiên miễn phí (DT-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-16",
+      "customer_goal": "mua SKU-JK-DWN-M-BE",
+      "customer_turns": [
+        "Em ơi lấy cho anh Warmly size M màu be.",
+        "Giao về 62 Kim Mã, Ba Đình, Hà Nội, anh trả tiền khi nhận."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-JK-DWN",
+        "variant_sku": "SKU-JK-DWN-M-BE",
+        "size": "M",
+        "color": "be",
+        "price_quoted_vnd": 1490000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "62 Kim Mã, Ba Đình, Hà Nội"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 4,
+      "customer_turns": [
+        "Anh nhận áo rồi mà hơi chật, đổi lên size L giúp anh được không?",
+        "Đổi lần đầu có mất phí ship không em?",
+        "Ok em đổi giúp anh, giữ màu be nhé."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "variant_sku"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised",
+        "color",
+        "address"
+      ],
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "exchange_size",
+          "new_variant_sku": "SKU-JK-DWN-L-BE"
+        },
+        "must_say_any": [
+          "miễn phí",
+          "không mất phí",
+          "không tốn phí",
+          "0đ"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "exchange_fee_vnd",
+            "value": 30000
+          },
+          {
+            "field": "exchange_fee_vnd",
+            "value": 20000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "exchange_fee_vnd": 0,
+        "new_size_in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-size-mien-phi-holdout",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N170",
+    "synthetic_customer": true,
+    "address": "62 Kim Mã, Ba Đình, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-16",
+      "call_2": "2026-10-20"
+    },
+    "choices": {
+      "cust": "N170",
+      "p": "SKU-JK-DWN-M-BE",
+      "d1": "2026-10-16",
+      "gap": 4
+    }
+  }
+}

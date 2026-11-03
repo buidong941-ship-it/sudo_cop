@@ -1,0 +1,148 @@
+{
+ "scenario_id": "V3-079",
+ "level": "M2",
+ "persona": "khach_goi_lan_3_het_kien_nhan",
+ "hard_case": "goi_lan_3_het_kien_nhan",
+ "customer_phone": "0980243695",
+ "customer_name": "Bích",
+ "honorific": "cô",
+ "notes": "Khách gọi lần 3, mất kiên nhẫn: chốt ngay với size/màu/địa chỉ đã có, hỏi tối đa 1 câu. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "hoi SKU-SN-CAS-42-TRANG",
+   "customer_turns": [
+    "Em ơi Urban Classic size 42 màu trắng còn hàng không?",
+    "Giá sao em?",
+    "Để cô coi lại rồi tính nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-CAS",
+    "variant_sku": "SKU-SN-CAS-42-TRANG",
+    "size": 42,
+    "color": "trang",
+    "price_quoted_vnd": 890000
+   },
+   "ground_truth_facts": {
+    "price_vnd": 890000,
+    "in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 1,
+   "customer_turns": [
+    "Cô gọi lại hỏi tiếp Urban Classic hôm trước nè em.",
+    "Giao về 130 Trần Phú, Nha Trang, Khánh Hòa thì mấy ngày tới vậy?",
+    "Để cô hỏi thêm mẹ rồi chốt nhé."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "variant_sku"
+   ],
+   "must_not_ask": [
+    "product_advised",
+    "size",
+    "color"
+   ],
+   "facts_established": {
+    "address": "130 Trần Phú, Nha Trang, Khánh Hòa",
+    "blocker": "hoi mẹ"
+   },
+   "ground_truth_facts": {
+    "delivery_days": 4
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_3": {
+   "days_later": 2,
+   "customer_turns": [
+    "Lần thứ ba cô gọi rồi nha em, đừng hỏi lại size với địa chỉ nữa.",
+    "Chốt Urban Classic như hôm trước luôn, nhận hàng trả tiền."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "variant_sku",
+    "address",
+    "price_quoted_vnd"
+   ],
+   "must_not_ask": [
+    "product_advised",
+    "size",
+    "color",
+    "address",
+    "price_quoted_vnd"
+   ],
+   "facts_established": {
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-SN-CAS-42-TRANG",
+     "price_vnd": 890000,
+     "payment": "COD"
+    },
+    "max_agent_questions": 1
+   },
+   "ground_truth_facts": {
+    "price_vnd": 890000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-lan-ba-thoi-trang-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N145",
+  "synthetic_customer": true,
+  "address": "130 Trần Phú, Nha Trang, Khánh Hòa",
+  "dates": {
+   "call_1": "2026-10-15",
+   "call_2": "2026-10-16",
+   "call_3": "2026-10-18"
+  },
+  "choices": {
+   "cust": "N145",
+   "p": "SKU-SN-CAS-42-TRANG",
+   "d1": "2026-10-15",
+   "g1": 1,
+   "g2": 2
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ],
+   "call_3": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cô hỏi Urban Classic size 42 màu trắng còn không em?",
+    "Giá bao nhiêu vậy?",
+    "Để cô xem lại rồi tính."
+   ],
+   "call_2": [
+    "Cô gọi lại về Urban Classic hôm trước.",
+    "Giao về 130 Trần Phú, Nha Trang, Khánh Hòa thì mấy ngày tới?",
+    "Để cô hỏi mẹ thêm rồi chốt."
+   ],
+   "call_3": [
+    "Lần thứ ba cô gọi rồi đó em, đừng hỏi lại size với địa chỉ nữa nha.",
+    "Chốt Urban Classic như hôm trước, trả tiền khi nhận."
+   ]
+  }
+ }
+}

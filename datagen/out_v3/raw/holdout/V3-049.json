@@ -1,0 +1,72 @@
+{
+  "scenario_id": "V3-049",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "binh_luan_gia_doi_thu",
+  "customer_phone": "0901462463",
+  "customer_name": "Thảo",
+  "honorific": "chị",
+  "notes": "Không bình luận hàng/giá bên khác, không hạ giá theo đối thủ; nói giá trị của shop (chính hãng, bảo hành, đổi trả). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-24",
+      "customer_goal": "so gia SKU-SN-RUN2 voi doi thu",
+      "customer_turns": [
+        "Em ơi RunLite 2 Pro bên em bán 1 triệu 521 đúng không?",
+        "Bên một trang bán hàng trên Facebook bán có 1 triệu 221 thôi. Bên đó có phải hàng xách tay không em?",
+        "Em giảm bằng bên đó thì chị lấy, không thì chị mua bên kia."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "price_quoted_vnd": 1521000,
+        "competitor_price_vnd": 1221000,
+        "objection": "dat_qua"
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "chính hãng",
+          "bảo hành",
+          "đổi trả"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "competitor_price_vnd",
+            "value": "*any*"
+          },
+          {
+            "field": "price_vnd",
+            "value": 1221000
+          },
+          "là hàng giả",
+          "là hàng nhái",
+          "không uy tín",
+          "lừa đảo"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1521000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-thu-xach-tay-holdout",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N026",
+    "synthetic_customer": true,
+    "address": "70 Hùng Vương, TP Việt Trì, Phú Thọ",
+    "dates": {
+      "call_1": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N026",
+      "p": "SKU-SN-RUN2",
+      "d1": "2026-10-24",
+      "cdrop": 300000,
+      "rival": "một trang bán hàng trên Facebook"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "scenario_id": "V3-014",
+  "level": "M2",
+  "persona": "khach_da_kenh_fb_hotline",
+  "hard_case": null,
+  "customer_phone": "0913301756",
+  "customer_name": "Vy",
+  "honorific": "chị",
+  "notes": "Nối Zalo → hotline qua CRM (zalo_id ↔ SĐT). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-21",
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_vy79",
+      "customer_goal": "hoi SKU-MB-PUMP2 qua zalo",
+      "customer_turns": [
+        "Shop cho hỏi Medela Swing Maxi còn không",
+        "Giá bao nhiêu vậy",
+        "Ok để mình tính"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-PUMP2",
+        "price_quoted_vnd": 5990000
+      },
+      "ground_truth_facts": {
+        "price_vnd": 5990000,
+        "in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 1,
+      "channel": "hotline",
+      "customer_turns": [
+        "Alo em, hôm qua chị nhắn Zalo hỏi bên em á.",
+        "Lấy luôn cái đó nhé, giao 115 Nguyễn Thị Thập, Quận 7, TP HCM, COD."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "address": "115 Nguyễn Thị Thập, Quận 7, TP HCM",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-PUMP2",
+          "price_vnd": 5990000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 5990000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-zalo-roi-hotline-dev",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "C015",
+    "synthetic_customer": false,
+    "address": "115 Nguyễn Thị Thập, Quận 7, TP HCM",
+    "dates": {
+      "call_1": "2026-10-21",
+      "call_2": "2026-10-22"
+    },
+    "choices": {
+      "cust": "C015",
+      "p": "SKU-MB-PUMP2",
+      "d1": "2026-10-21",
+      "gap": 1
+    }
+  }
+}

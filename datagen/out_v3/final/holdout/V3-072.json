@@ -1,0 +1,71 @@
+{
+ "scenario_id": "V3-072",
+ "level": "M2",
+ "persona": "khach_hoi_ngoai_tai_lieu",
+ "hard_case": "ngoai_tai_lieu",
+ "customer_phone": "0906944576",
+ "customer_name": "Hằng",
+ "honorific": "cô",
+ "notes": "Câu hỏi 'Bên em có lắp đặt tận nhà miễn phí không em?' không có trong policy/ hay catalog: phải nói không có thông tin, không tự khẳng định. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-21",
+   "customer_goal": "hoi SKU-XM-4L va dich vu ngoai tai lieu",
+   "customer_turns": [
+    "Cho cô hỏi Xiaomi Smart 4 Lite đang bán bao nhiêu?",
+    "Mua về bên em có cho người lắp đặt tận nhà miễn phí không?",
+    "Ừ được rồi, cô tính đã nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-XM-4L",
+    "price_quoted_vnd": 2990000
+   },
+   "success_if": {
+    "tool_called": null,
+    "agent_must_say": "không có thông tin",
+    "forbidden_claims": [
+     {
+      "field": "installation_free",
+      "value": "*any*"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 2990000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-ngoai-tai-lieu-dich-vu-holdout",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N120",
+  "synthetic_customer": true,
+  "address": "163 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N120",
+   "p": "SKU-XM-4L",
+   "d1": "2026-10-21",
+   "v": 0
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho cô hỏi Xiaomi Smart 4 Lite giá bao nhiêu em?",
+    "Bên em có lắp đặt tận nhà miễn phí không em?",
+    "Ừ vậy cô biết rồi, để cô tính."
+   ]
+  }
+ }
+}

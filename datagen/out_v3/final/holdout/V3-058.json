@@ -1,0 +1,107 @@
+{
+ "scenario_id": "V3-058",
+ "level": "M2",
+ "persona": "khach_mua_nhieu_mon",
+ "hard_case": "nhieu_mon_vuot_cod_ngan_sach",
+ "customer_phone": "0970171990",
+ "customer_name": "Vy",
+ "honorific": "chị",
+ "notes": "Cuộc gọi dài (8 lượt khách, 16 lượt cả hai phía), 4 món, tổng 17.120.000đ > ngân sách 15.000.000đ và > 10 triệu → không COD (VC-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "mua 4 mon cho nha moi",
+   "customer_turns": [
+    "Alo em, nhà chị mới chuyển tới, cần mua mấy món gia dụng.",
+    "Bắt đầu với máy lọc không khí nha, AirPure Pro bao nhiêu?",
+    "Thêm máy lọc nước RO Karofi 9 lõi, cái này giá sao?",
+    "Lấy luôn DC inverter Panasonic F-409 với một bộ màng lọc thay thế cho AirPure Pro nữa em.",
+    "Tổng cộng bao nhiêu vậy? Chị định chi khoảng 15 triệu thôi.",
+    "Vượt rồi hả… thôi, cứ lấy đủ bốn món. Giao về 28 Ngô Quyền, Sơn Trà, Đà Nẵng giúp chị.",
+    "Chị thanh toán tiền mặt lúc nhận được không em?",
+    "Thôi chị chuyển khoản trước vậy, em lên đơn nhé."
+   ],
+   "facts_established": {
+    "basket": [
+     "SKU-AP-PRO",
+     "SKU-WF-RO9",
+     "SKU-FAN-DC1",
+     "SKU-AP-FLT-P"
+    ],
+    "budget_vnd": 15000000,
+    "address": "28 Ngô Quyền, Sơn Trà, Đà Nẵng",
+    "payment": "bank"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-AP-PRO",
+     "price_vnd": 7690000,
+     "payment": "bank"
+    },
+    "also_ordered": [
+     "SKU-AP-PRO",
+     "SKU-WF-RO9",
+     "SKU-FAN-DC1",
+     "SKU-AP-FLT-P"
+    ],
+    "total_match_vnd": 17120000,
+    "must_say_any": [
+     "10 triệu",
+     "10.000.000",
+     "mười triệu",
+     "10tr"
+    ]
+   },
+   "ground_truth_facts": {
+    "total_vnd": 17120000,
+    "cod_allowed": false,
+    "cod_limit_vnd": 10000000
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-bon-mon-nha-moi-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N063",
+  "synthetic_customer": true,
+  "address": "28 Ngô Quyền, Sơn Trà, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-15"
+  },
+  "choices": {
+   "cust": "N063",
+   "pa": "SKU-AP-PRO",
+   "pw": "SKU-WF-RO9",
+   "pf": "SKU-FAN-DC1",
+   "d1": "2026-10-15"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Chào em, nhà chị mới chuyển về, chị cần sắm mấy món gia dụng.",
+    "Trước tiên là máy lọc không khí, AirPure Pro giá sao em?",
+    "Thêm một máy lọc nước RO Karofi 9 lõi nữa, cái đó bao nhiêu?",
+    "Rồi lấy thêm DC inverter Panasonic F-409, với một bộ màng lọc thay thế cho AirPure Pro luôn.",
+    "Tổng cộng hết bao nhiêu em? Chị tính sơ chỉ khoảng 15 triệu thôi.",
+    "Vượt vậy à… thôi kệ, lấy đủ bốn món. Giao về 28 Ngô Quyền, Sơn Trà, Đà Nẵng nhé.",
+    "Chị trả tiền mặt lúc nhận được không em?",
+    "Vậy chị chuyển khoản trước, em lên đơn đi."
+   ]
+  }
+ }
+}

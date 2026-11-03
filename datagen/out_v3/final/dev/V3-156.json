@@ -1,0 +1,100 @@
+{
+ "scenario_id": "V3-156",
+ "level": "M2",
+ "persona": "khach_hoi_nhieu_khong_mua",
+ "hard_case": null,
+ "customer_phone": "0959543074",
+ "customer_name": "Nam",
+ "honorific": "anh",
+ "notes": "Khách hỏi nhiều không mua; 'mai 19 giờ' = 2026-10-22T19:00 (ITN thời gian tương đối). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-17",
+   "customer_goal": "so sanh 3 mau",
+   "customer_turns": [
+    "Alo em, RO Karofi 9 lõi với RO Kangaroo 10 lõi khác chỗ nào?",
+    "Rồi UF Sunhouse thì sao?",
+    "Anh lên mạng xem review đã nhé."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000,
+    "blocker": "so sanh mau khac"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 4,
+   "customer_turns": [
+    "Anh chưa chọn được mẫu nào trong mấy cái hôm trước em ơi.",
+    "Mai 19 giờ em gọi anh nhé, bây giờ anh kẹt việc."
+   ],
+   "must_carry_over": [
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": "schedule.callback",
+    "args_match": {
+     "customer_phone": "0959543074",
+     "callback_at": "2026-10-22T19:00"
+    }
+   },
+   "ground_truth_facts": {
+    "callback_at": "2026-10-22T19:00"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-so-ba-mau-hen-lai-dev",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N454",
+  "synthetic_customer": true,
+  "address": "20 Đại lộ Bình Dương, Thủ Dầu Một, Bình Dương",
+  "dates": {
+   "call_1": "2026-10-17",
+   "call_2": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N454",
+   "d1": "2026-10-17",
+   "gap": 4,
+   "hour": 19,
+   "trio": [
+    "SKU-WF-RO9",
+    "SKU-WF-RO10",
+    "SKU-WF-UF"
+   ]
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "RO Karofi 9 lõi với RO Kangaroo 10 lõi khác nhau chỗ nào em?",
+    "Còn UF Sunhouse thì sao?",
+    "Để anh xem thêm review đã."
+   ],
+   "call_2": [
+    "Anh vẫn đang phân vân mấy mẫu hôm trước.",
+    "Mai 19 giờ em gọi lại cho anh nhé, giờ anh bận."
+   ]
+  }
+ }
+}

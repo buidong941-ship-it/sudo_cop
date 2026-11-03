@@ -1,0 +1,68 @@
+{
+  "scenario_id": "V3-032",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "km_loai_tru_size",
+  "customer_phone": "0925877188",
+  "customer_name": "Huy",
+  "honorific": "anh",
+  "notes": "RUN-10 loại trừ size 43: size 42 giá 1.521.000đ, size 43 giá 1.740.000đ (không giảm). Agent không được báo giá 43 theo mức giảm của 42. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-24",
+      "customer_goal": "mua SKU-SN-RUN2, doi size 43",
+      "customer_turns": [
+        "Cho anh hỏi RunLite 2 Pro size 42 màu đen đang giảm còn bao nhiêu em?",
+        "À khoan, chân anh đi size 43 mới vừa. Size 43 có giảm giống vậy không?",
+        "Vậy lấy size 43 màu đen luôn, giao về 193 Ngô Quyền, Sơn Trà, Đà Nẵng, anh chuyển khoản trước."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "variant_sku": "SKU-SN-RUN2-43-DEN",
+        "size": 43,
+        "color": "den",
+        "price_quoted_vnd": 1740000,
+        "address": "193 Ngô Quyền, Sơn Trà, Đà Nẵng",
+        "payment": "bank"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN2-43-DEN",
+          "price_vnd": 1740000,
+          "payment": "bank"
+        },
+        "forbidden_claims": [
+          {
+            "field": "price_vnd",
+            "value": 1566000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1740000,
+        "list_price_vnd": 1740000,
+        "promo_RUN-10_active": false,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-sang-size-43-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C014",
+    "synthetic_customer": false,
+    "address": "193 Ngô Quyền, Sơn Trà, Đà Nẵng",
+    "dates": {
+      "call_1": "2026-10-24"
+    },
+    "choices": {
+      "cust": "C014",
+      "p": "SKU-SN-RUN2-42-DEN",
+      "d1": "2026-10-24"
+    }
+  }
+}

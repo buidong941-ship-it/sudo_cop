@@ -1,0 +1,113 @@
+{
+ "scenario_id": "V3-026",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": "phien_ban_chinh_sach_cu",
+ "customer_phone": "0932568855",
+ "customer_name": "Lâm",
+ "honorific": "anh",
+ "notes": "Đơn tạo 2026-09-25 (trước 01/10) → theo CL-01 vẫn áp bản đổi trả 2026-06 (14 ngày). Khách nhận hàng 2026-09-30, gọi trả ngày thứ 9: quá 7 ngày nhưng còn trong 14 ngày. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-09-25",
+   "customer_goal": "dat SKU-JK-DWN-XL-DEN",
+   "customer_turns": [
+    "Lên đơn Warmly size XL màu đen cho anh nhé.",
+    "Ship về 112 Lê Lợi, TP Huế, Thừa Thiên Huế, nhận hàng rồi anh trả tiền."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-JK-DWN",
+    "variant_sku": "SKU-JK-DWN-XL-DEN",
+    "price_quoted_vnd": 1530000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "112 Lê Lợi, TP Huế, Thừa Thiên Huế"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 14,
+   "customer_turns": [
+    "Em ơi anh nhận áo hôm trước, tính ra 9 ngày rồi, mặc thử không hợp nên anh muốn trả.",
+    "Đơn anh đặt từ hồi tháng 9 mà em, vẫn được tính 14 ngày chứ?",
+    "Rồi em làm thủ tục trả hàng cho anh nghen."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "return"
+    },
+    "must_say_any": [
+     "14 ngày",
+     "mười bốn ngày",
+     "trước ngày 01/10",
+     "trước 01/10",
+     "chính sách cũ",
+     "phiên bản cũ"
+    ],
+    "forbidden_claims": [
+     "đã quá hạn đổi trả",
+     "quá 7 ngày nên",
+     "không được trả nữa"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 1530000,
+    "applicable_return_days": 14,
+    "policy_version": "2026-06",
+    "order_created_before": "2026-10-01"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-don-cu-chinh-sach-cu-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C045",
+  "synthetic_customer": false,
+  "address": "112 Lê Lợi, TP Huế, Thừa Thiên Huế",
+  "dates": {
+   "call_1": "2026-09-25",
+   "call_2": "2026-10-09"
+  },
+  "choices": {
+   "cust": "C045",
+   "p": "SKU-JK-DWN-XL-DEN",
+   "d1": "2026-09-25",
+   "gap": 14
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho anh đặt Warmly size XL màu đen nhé em.",
+    "Giao về 112 Lê Lợi, TP Huế, Thừa Thiên Huế, thanh toán khi nhận hàng."
+   ],
+   "call_2": [
+    "Em ơi, anh nhận áo được 9 ngày rồi, mặc thử thấy không hợp, anh muốn trả lại.",
+    "Đơn này anh đặt hồi tháng 9 mà, vẫn được tính 14 ngày đúng không em?",
+    "Vậy em làm thủ tục trả hàng giúp anh nhé."
+   ]
+  }
+ }
+}

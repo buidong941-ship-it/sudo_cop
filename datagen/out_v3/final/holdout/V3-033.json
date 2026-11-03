@@ -1,0 +1,82 @@
+{
+ "scenario_id": "V3-033",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "km_loai_tru_size",
+ "customer_phone": "0936270107",
+ "customer_name": "Tuấn",
+ "honorific": "anh",
+ "notes": "RUN-10 loại trừ size 43: size 42 giá 1.161.000đ, size 43 giá 1.340.000đ (không giảm). Agent không được báo giá 43 theo mức giảm của 42. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-21",
+   "customer_goal": "mua SKU-SN-RUN1, doi size 43",
+   "customer_turns": [
+    "RunLite 1 size 42 màu xám giờ sau giảm giá là bao nhiêu em?",
+    "Khoan, anh nhầm, size 43 mới đúng chân anh. Size 43 thì có giảm không?",
+    "Vậy chốt size 43 màu xám, gửi tới 146 Cách Mạng Tháng 8, Quận 3, TP HCM, tiền anh chuyển khoản trước cho em."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN1",
+    "variant_sku": "SKU-SN-RUN1-43-XAM",
+    "size": 43,
+    "color": "xam",
+    "price_quoted_vnd": 1340000,
+    "address": "146 Cách Mạng Tháng 8, Quận 3, TP HCM",
+    "payment": "bank"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-SN-RUN1-43-XAM",
+     "price_vnd": 1340000,
+     "payment": "bank"
+    },
+    "forbidden_claims": [
+     {
+      "field": "price_vnd",
+      "value": 1206000
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 1340000,
+    "list_price_vnd": 1340000,
+    "promo_RUN-10_active": false,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-sang-size-43-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C002",
+  "synthetic_customer": false,
+  "address": "146 Cách Mạng Tháng 8, Quận 3, TP HCM",
+  "dates": {
+   "call_1": "2026-10-21"
+  },
+  "choices": {
+   "cust": "C002",
+   "p": "SKU-SN-RUN1-42-XAM",
+   "d1": "2026-10-21"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho anh hỏi RunLite 1 size 42 màu xám đang giảm còn bao nhiêu em?",
+    "À khoan, chân anh đi size 43 mới vừa. Size 43 có giảm giống vậy không?",
+    "Vậy lấy size 43 màu xám luôn, giao về 146 Cách Mạng Tháng 8, Quận 3, TP HCM, anh chuyển khoản trước."
+   ]
+  }
+ }
+}

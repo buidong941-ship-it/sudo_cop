@@ -1,0 +1,92 @@
+{
+  "scenario_id": "V3-030",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "het_hang_luc_khach_quyet",
+  "customer_phone": "0963279264",
+  "customer_name": "Đạt",
+  "honorific": "anh",
+  "notes": "SKU-MB-STR1 hết hàng ngày 2026-10-25, chưa có ngày về (không được lộ lý do nhà cung cấp). Khách tự chọn SKU-MB-STR2; agent không được tạo đơn SKU-MB-STR1. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-16",
+      "customer_goal": "hoi SKU-MB-STR1",
+      "customer_turns": [
+        "Anh muốn hỏi Joie Pact, giờ giá bao nhiêu em?",
+        "Bảo hành bao lâu vậy em?",
+        "Được, để anh gom tiền, vài hôm nữa anh lấy."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STR1",
+        "price_quoted_vnd": 3490000,
+        "blocker": "gom tien"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 3490000,
+        "in_stock": true,
+        "warranty_months": 12
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 9,
+      "customer_turns": [
+        "Em ơi anh chốt Joie Pact hôm trước nhé.",
+        "Hết rồi hả? Vậy Combi Sugocal thì sao, còn hàng không em, giá bao nhiêu?",
+        "Được, lấy Combi Sugocal cho anh, giao về 188 Nguyễn Trãi, Thanh Xuân, Hà Nội, trả tiền khi nhận."
+      ],
+      "must_carry_over": [
+        "product_advised"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STR2",
+        "address": "188 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-STR2",
+          "price_vnd": 6790000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "hết hàng",
+          "tạm hết",
+          "hết mất",
+          "đã hết"
+        ],
+        "trace_must_not_match": [
+          "[Nn]hà cung cấp (chậm|giao chậm)"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 6790000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-het-hang-doi-mau-holdout",
+    "instance": 3,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C047",
+    "synthetic_customer": false,
+    "address": "188 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-16",
+      "call_2": "2026-10-25"
+    },
+    "choices": {
+      "cust": "C047",
+      "p": "SKU-MB-STR1",
+      "d1": "2026-10-16",
+      "gap": 9
+    }
+  }
+}

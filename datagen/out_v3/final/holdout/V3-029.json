@@ -1,0 +1,116 @@
+{
+ "scenario_id": "V3-029",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "het_hang_luc_khach_quyet",
+ "customer_phone": "0981933190",
+ "customer_name": "Lan",
+ "honorific": "chị",
+ "notes": "SKU-AP-PRO hết hàng ngày 2026-10-19, dự kiến về 2026-10-21. Khách tự chọn SKU-SS-AX40; agent không được tạo đơn SKU-AP-PRO. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "hoi SKU-AP-PRO",
+   "customer_turns": [
+    "Chị đang tính mua AirPure Pro, giá bây giờ sao em?",
+    "Thế bảo hành thế nào hả em?",
+    "Được rồi, đợi chị xoay tiền vài hôm rồi chị lấy nhé."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AP-PRO",
+    "price_quoted_vnd": 7690000,
+    "blocker": "gom tien"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 7690000,
+    "in_stock": true,
+    "warranty_months": 24
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 4,
+   "customer_turns": [
+    "Chị gọi để lấy AirPure Pro đây em.",
+    "Không còn à? Thế Samsung AX40 có hàng không, giá bao nhiêu em?",
+    "Thôi lấy Samsung AX40 vậy, ship về 31 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk, thanh toán lúc nhận nhé em."
+   ],
+   "must_carry_over": [
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SS-AX40",
+    "address": "31 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-SS-AX40",
+     "price_vnd": 6490000,
+     "payment": "COD"
+    },
+    "must_say_any": [
+     "hết hàng",
+     "tạm hết",
+     "hết mất",
+     "đã hết"
+    ],
+    "trace_must_not_match": [
+     "[Nn]hà cung cấp (chậm|giao chậm)"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 6490000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-het-hang-doi-mau-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C003",
+  "synthetic_customer": false,
+  "address": "31 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk",
+  "dates": {
+   "call_1": "2026-10-15",
+   "call_2": "2026-10-19"
+  },
+  "choices": {
+   "cust": "C003",
+   "p": "SKU-AP-PRO",
+   "d1": "2026-10-15",
+   "gap": 4
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Chị muốn hỏi AirPure Pro, giờ giá bao nhiêu em?",
+    "Bảo hành bao lâu vậy em?",
+    "Được, để chị gom tiền, vài hôm nữa chị lấy."
+   ],
+   "call_2": [
+    "Em ơi chị chốt AirPure Pro hôm trước nhé.",
+    "Hết rồi hả? Vậy Samsung AX40 thì sao, còn hàng không em, giá bao nhiêu?",
+    "Được, lấy Samsung AX40 cho chị, giao về 31 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk, trả tiền khi nhận."
+   ]
+  }
+ }
+}

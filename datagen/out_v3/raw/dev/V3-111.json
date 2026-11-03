@@ -1,0 +1,59 @@
+{
+  "scenario_id": "V3-111",
+  "level": "M2",
+  "persona": "khach_hoi_nhieu_khong_mua",
+  "hard_case": "cau_qua_dai",
+  "customer_phone": "0979727593",
+  "customer_name": "Bích",
+  "honorific": "cô",
+  "notes": "Một lượt khách khoảng 120 chữ; câu hỏi (giá, hợp diện tích) nằm cuối đoạn kể. Kiểm giới hạn độ dài và trích slot. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-21",
+      "customer_goal": "hoi may loc khong khi bang tin nhan dai",
+      "customer_turns": [
+        "Em ơi, chuyện là thế này, nhà cô mới sửa lại cái phòng ngủ cho hai đứa nhỏ, phòng tầm 30 mét vuông, cửa sổ hướng ra đường nên bụi nhiều lắm, chiều nào lau bàn cũng thấy một lớp. Hôm trước cô có đi mấy chỗ xem, người ta giới thiệu đủ loại, cô nghe mà rối hết cả lên, rồi đứa em cô nó bảo mua loại nào có màng HEPA là được. Cô thì không rành mấy cái này. Tóm lại cô muốn hỏi Xiaomi Smart 4 Pro dùng cho phòng 30 mét vuông có ổn không, giá bao nhiêu, ngân sách cô tầm 6 triệu thôi em.",
+        "Ừ vậy để cô suy nghĩ thêm."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-XM-4P",
+        "price_quoted_vnd": 5490000,
+        "room_area_m2": 30,
+        "budget_vnd": 6000000
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "5 triệu 490",
+          "5,490,000",
+          "5.490.000",
+          "5490000",
+          "5490k",
+          "5tr490"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 5490000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-tin-nhan-qua-dai-dev",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N276",
+    "synthetic_customer": true,
+    "address": "100 Ba Cu, TP Vũng Tàu, Bà Rịa - Vũng Tàu",
+    "dates": {
+      "call_1": "2026-10-21"
+    },
+    "choices": {
+      "cust": "N276",
+      "p": "SKU-XM-4P",
+      "d1": "2026-10-21",
+      "area": 30
+    }
+  }
+}

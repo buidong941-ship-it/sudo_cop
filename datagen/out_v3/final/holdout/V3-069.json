@@ -1,0 +1,109 @@
+{
+ "scenario_id": "V3-069",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": "doi_san_pham_hoan_chenh_lech",
+ "customer_phone": "0990263364",
+ "customer_name": "Thảo",
+ "honorific": "chị",
+ "notes": "Đổi SKU-SN-RUN2-40-TRANG (1.521.000đ) sang SKU-SN-CAS-40-TRANG (890.000đ): hoàn 631.000đ trong 3–5 ngày làm việc, lần đổi đầu miễn phí. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-13",
+   "customer_goal": "mua SKU-SN-RUN2-40-TRANG",
+   "customer_turns": [
+    "Chị chốt RunLite 2 Pro size 40 màu trắng nha em.",
+    "Ship về 102 Nguyễn Trãi, Thanh Xuân, Hà Nội, chị trả COD."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN2",
+    "variant_sku": "SKU-SN-RUN2-40-TRANG",
+    "price_quoted_vnd": 1521000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "102 Nguyễn Trãi, Thanh Xuân, Hà Nội"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 3,
+   "customer_turns": [
+    "Alo em, đôi RunLite 2 Pro hôm trước chị nhận rồi, đi thử thấy hơi nặng.",
+    "Chị muốn đổi qua Urban Classic size 40 màu trắng, mẫu đó rẻ hơn đúng không em?",
+    "Rồi em hoàn phần chênh lệch cho chị nhé, làm đổi giúp chị."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "product_advised",
+    "price_quoted_vnd"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised",
+    "address"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "exchange_product",
+     "new_variant_sku": "SKU-SN-CAS-40-TRANG"
+    },
+    "must_say_any": [
+     "631,000",
+     "631.000",
+     "631000",
+     "631k"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 631000,
+    "refund_days": "3-5 ngày làm việc",
+    "exchange_fee_vnd": 0,
+    "price_vnd": 890000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-giay-re-hon-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N105",
+  "synthetic_customer": true,
+  "address": "102 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-13",
+   "call_2": "2026-10-16"
+  },
+  "choices": {
+   "cust": "N105",
+   "p": "SKU-SN-RUN2-40-TRANG",
+   "d1": "2026-10-13",
+   "gap": 3
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Lấy cho chị RunLite 2 Pro size 40 màu trắng nhé.",
+    "Giao về 102 Nguyễn Trãi, Thanh Xuân, Hà Nội, ship COD."
+   ],
+   "call_2": [
+    "Em ơi đôi RunLite 2 Pro chị nhận rồi, đi thử thấy nặng chân quá.",
+    "Chị đổi sang Urban Classic size 40 màu trắng được không? Mẫu đó rẻ hơn phải không em?",
+    "Vậy phần chênh lệch em hoàn lại cho chị nhé, đổi giúp chị."
+   ]
+  }
+ }
+}

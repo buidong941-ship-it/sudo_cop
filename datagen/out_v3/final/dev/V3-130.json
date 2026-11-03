@@ -1,0 +1,103 @@
+{
+ "scenario_id": "V3-130",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": null,
+ "customer_phone": "0992879194",
+ "customer_name": "Tuấn",
+ "honorific": "anh",
+ "notes": "restock_date (2026-10-21) phải được nhớ; khách không nhắc lại tên sản phẩm ở cuộc 2. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-19",
+   "customer_goal": "hoi SKU-AP-PRO dang het",
+   "customer_turns": [
+    "Em ơi AirPure Pro còn hàng không?",
+    "Khi nào có hàng lại vậy em?",
+    "Ừ khi nào có thì anh lấy, anh gọi lại sau nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AP-PRO",
+    "restock_date": "2026-10-21"
+   },
+   "ground_truth_facts": {
+    "in_stock": false,
+    "restock_date": "2026-10-21"
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 5,
+   "customer_turns": [
+    "Hàng anh hỏi bữa trước về chưa em?",
+    "Có rồi thì đặt luôn giao 16 Kim Mã, Ba Đình, Hà Nội, COD nhé."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "restock_date"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "address": "16 Kim Mã, Ba Đình, Hà Nội",
+    "payment": "COD",
+    "price_quoted_vnd": 7690000
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-AP-PRO",
+     "price_vnd": 7690000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 7690000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hang-ve-chua-dev",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N351",
+  "synthetic_customer": true,
+  "address": "16 Kim Mã, Ba Đình, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-19",
+   "call_2": "2026-10-24"
+  },
+  "choices": {
+   "cust": "N351",
+   "p": "SKU-AP-PRO",
+   "d1": "2026-10-19",
+   "gap": 5
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho anh hỏi AirPure Pro còn hàng không em?",
+    "Bao giờ có hàng lại vậy?",
+    "Ừ có hàng thì anh lấy, để anh gọi lại."
+   ],
+   "call_2": [
+    "Hàng về chưa em? Anh hỏi hôm trước đó.",
+    "Về rồi thì lên đơn giao 16 Kim Mã, Ba Đình, Hà Nội, COD nha."
+   ]
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+  "scenario_id": "V3-002",
+  "level": "M2",
+  "persona": "khach_da_kenh_fb_hotline",
+  "hard_case": "asr_loi_va_teencode",
+  "customer_phone": "0952059972",
+  "customer_name": "Minh",
+  "honorific": "anh",
+  "notes": "Cuộc 1 nhắn Fanpage kiểu teencode không dấu; cuộc 2 gọi hotline, hệ thống nhận transcript ASR (số đọc thành chữ, mất dấu câu). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-18",
+      "channel": "chat_fanpage",
+      "channel_identity": "fb.minh.658",
+      "input_mode": "chat_teencode",
+      "customer_goal": "hoi SKU-WF-RO10 qua fanpage",
+      "customer_turns": [
+        "Shop ơi RO Kangaroo 10 lõi còn hàng không ạ",
+        "Giá bao nhiêu vậy shop, có được miễn phí ship không",
+        "Để mình hỏi vợ rồi nhắn lại nha"
+      ],
+      "customer_turns_asr": [
+        "shop oi ro kangaroo 10 loi con hang k a",
+        "gia bn v shop, co dc mien phi ship k",
+        "de mk hoi vo r nhan lai nha"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-WF-RO10",
+        "price_quoted_vnd": 6890000,
+        "blocker": "can hoi vo"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 6890000,
+        "in_stock": true,
+        "freeship": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 3,
+      "channel": "hotline",
+      "input_mode": "asr_transcript",
+      "customer_turns": [
+        "Alo em ơi anh hôm trước có nhắn trên Fanpage hỏi RO Kangaroo 10 lõi đó",
+        "Giá vẫn 6 triệu 890 phải không em",
+        "Ừ lên đơn cho anh giao về 57 Quang Trung, Hà Đông, Hà Nội nha, nhận hàng trả tiền"
+      ],
+      "customer_turns_asr": [
+        "alo em ơi anh hôm trước có nhắn trên fanpage hỏi rô kang ga ru mười lõi đó",
+        "giá vẫn sáu triệu tám trăm chín mươi phải không em",
+        "ừ lên đơn cho anh giao về năm mươi bảy quang trung hà đông hà nội nha nhận hàng trả tiền"
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "address": "57 Quang Trung, Hà Đông, Hà Nội",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-WF-RO10",
+          "price_vnd": 6890000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 6890000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-chat-roi-asr-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C004",
+    "synthetic_customer": false,
+    "address": "57 Quang Trung, Hà Đông, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-18",
+      "call_2": "2026-10-21"
+    },
+    "choices": {
+      "cust": "C004",
+      "p": "SKU-WF-RO10",
+      "d1": "2026-10-18",
+      "gap": 3
+    }
+  }
+}

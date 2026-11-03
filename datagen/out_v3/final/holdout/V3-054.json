@@ -1,0 +1,87 @@
+{
+ "scenario_id": "V3-054",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "hen_goi_lai_ngay_nghi",
+ "customer_phone": "0923287488",
+ "customer_name": "Liên",
+ "honorific": "cô",
+ "notes": "Gọi ngày 2026-10-21; 'đầu tuần sau, thứ hai ấy' = 26/10 là ngày nghỉ (LN-02) → hẹn sang 27/10 cùng giờ (15:00) và báo khách. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-21",
+   "customer_goal": "hoi SKU-MB-PUMP2, hen goi lai",
+   "customer_turns": [
+    "Alo em, cô hỏi Medela Swing Maxi giá bao nhiêu?",
+    "Cô kẹt việc rồi, đầu tuần sau, thứ hai ấy cỡ 3 giờ chiều em gọi lại cô nhé.",
+    "Ok, gọi đúng giờ giúp cô nha em."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-MB-PUMP2",
+    "price_quoted_vnd": 5990000,
+    "callback_requested": "2026-10-26T15:00"
+   },
+   "success_if": {
+    "tool_called": "schedule.callback",
+    "args_match": {
+     "customer_phone": "0923287488",
+     "callback_at": "2026-10-27T15:00"
+    },
+    "must_say_any": [
+     "27/10",
+     "thứ ba",
+     "ngày 27"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "callback_at",
+      "value": "2026-10-26T15:00"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "callback_at": "2026-10-27T15:00",
+    "holiday": "2026-10-26"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hen-thu-hai-tuan-sau-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N045",
+  "synthetic_customer": true,
+  "address": "43 Phan Đình Phùng, Quy Nhơn, Bình Định",
+  "dates": {
+   "call_1": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N045",
+   "p": "SKU-MB-PUMP2",
+   "d1": "2026-10-21",
+   "slot": [
+    "3 giờ chiều",
+    15,
+    0
+   ],
+   "when": "đầu tuần sau, thứ hai ấy"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho cô hỏi Medela Swing Maxi đang bán bao nhiêu em?",
+    "Cô đang bận, đầu tuần sau, thứ hai ấy tầm 3 giờ chiều em gọi lại cho cô được không?",
+    "Ừ, nhớ gọi đúng giờ nha em."
+   ]
+  }
+ }
+}

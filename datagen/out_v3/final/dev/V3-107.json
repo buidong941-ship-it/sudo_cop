@@ -1,0 +1,69 @@
+{
+ "scenario_id": "V3-107",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "asr_khong_ro",
+ "customer_phone": "0957616022",
+ "customer_name": "Bích",
+ "honorific": "cô",
+ "notes": "Lượt 1 là transcript rác; agent phải xin nói lại thay vì đoán ý hay chào kết thúc. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-23",
+   "input_mode": "asr_transcript",
+   "customer_goal": "hoi gia qua duong truyen kem",
+   "customer_turns": [
+    "(tiếng rè, nghe không rõ)",
+    "Cho cô hỏi UF Sunhouse giá bao nhiêu em?",
+    "Ừ để cô tính thêm."
+   ],
+   "customer_turns_asr": [
+    "… à… em ơi… rè rè… cái máy… ờ…",
+    "cho cô hỏi u ép san hao giá bao nhiêu em",
+    "ừ để cô tính thêm"
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-UF",
+    "price_quoted_vnd": 3290000
+   },
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "chưa nghe rõ",
+     "nghe chưa rõ",
+     "nói lại",
+     "nhắc lại",
+     "không nghe rõ"
+    ],
+    "must_not_call_tools": [
+     "order.create",
+     "handoff.transfer"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 3290000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-asr-re-khong-ro-dev",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N257",
+  "synthetic_customer": true,
+  "address": "176 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-23"
+  },
+  "choices": {
+   "cust": "N257",
+   "p": "SKU-WF-UF",
+   "d1": "2026-10-23",
+   "noise": "… à… em ơi… rè rè… cái máy… ờ…"
+  },
+  "naturalized": {},
+  "template_turns": {}
+ }
+}

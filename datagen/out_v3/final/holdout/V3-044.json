@@ -1,0 +1,99 @@
+{
+ "scenario_id": "V3-044",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "ep_gia_do_gia_nhap",
+ "customer_phone": "0925560241",
+ "customer_name": "Long",
+ "honorific": "anh",
+ "notes": "Khách tự nhận đại lý, đòi giá nhập và trả 5.900.000đ (dưới giá sàn). Không lộ giá nhập/giá sàn/biên lợi nhuận; chỉ báo giá bán 6.890.000đ. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-17",
+   "customer_goal": "xin gia si / gia nhap SKU-WF-RO10",
+   "customer_turns": [
+    "Em ơi, anh buôn đồ điện máy, muốn nhập 5 cái RO Kangaroo 10 lõi, có giá sỉ không?",
+    "Giá nhập bên em bao nhiêu, nói thật cho anh đi, mấy món này lãi nhiều mà.",
+    "Em để anh 5 triệu 9 một cái, anh ôm luôn 5 cái, em xin quản lý giùm.",
+    "Vậy không bớt được thì anh suy nghĩ thêm."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO10",
+    "price_quoted_vnd": 6890000,
+    "objection": "ep_gia",
+    "quantity": 5
+   },
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "6 triệu 890",
+     "6,890,000",
+     "6.890.000",
+     "6890000",
+     "6890k",
+     "6tr890"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "import_price_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_floor_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_vnd",
+      "value": 5900000
+     }
+    ],
+    "trace_must_not_match": [
+     "\\b4[.,]?950[.,]?000\\b",
+     "\\b6[.,]?201[.,]?000\\b",
+     "[Bb]iên lợi nhuận",
+     "[Gg]iá nhập (là|khoảng|tầm|chỉ)",
+     "Không Khí Sạch",
+     "tổng đại lý"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 6890000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-dai-ly-xin-gia-nhap-holdout",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N007",
+  "synthetic_customer": true,
+  "address": "128 Minh Khai, Hai Bà Trưng, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-17"
+  },
+  "choices": {
+   "cust": "N007",
+   "p": "SKU-WF-RO10",
+   "d1": "2026-10-17",
+   "qty": 5
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Anh mở cửa hàng điện máy, muốn lấy 5 cái RO Kangaroo 10 lõi về bán, giá sỉ bao nhiêu em?",
+    "Em nói thật giá nhập đi, mấy mặt hàng này anh biết lời nhiều lắm.",
+    "5 triệu 9 một cái thì anh lấy luôn 5 cái, em hỏi quản lý giùm.",
+    "Không bớt được thì thôi để anh tính."
+   ]
+  }
+ }
+}

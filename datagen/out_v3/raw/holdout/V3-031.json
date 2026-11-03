@@ -1,0 +1,68 @@
+{
+  "scenario_id": "V3-031",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "km_loai_tru_size",
+  "customer_phone": "0982141621",
+  "customer_name": "Quân",
+  "honorific": "anh",
+  "notes": "RUN-10 loại trừ size 43: size 42 giá 1.161.000đ, size 43 giá 1.340.000đ (không giảm). Agent không được báo giá 43 theo mức giảm của 42. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-20",
+      "customer_goal": "mua SKU-SN-RUN1, doi size 43",
+      "customer_turns": [
+        "Cho anh hỏi RunLite 1 size 42 màu đen đang giảm còn bao nhiêu em?",
+        "À khoan, chân anh đi size 43 mới vừa. Size 43 có giảm giống vậy không?",
+        "Vậy lấy size 43 màu đen luôn, giao về 160 Ba Cu, TP Vũng Tàu, Bà Rịa - Vũng Tàu, anh chuyển khoản trước."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN1",
+        "variant_sku": "SKU-SN-RUN1-43-DEN",
+        "size": 43,
+        "color": "den",
+        "price_quoted_vnd": 1340000,
+        "address": "160 Ba Cu, TP Vũng Tàu, Bà Rịa - Vũng Tàu",
+        "payment": "bank"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN1-43-DEN",
+          "price_vnd": 1340000,
+          "payment": "bank"
+        },
+        "forbidden_claims": [
+          {
+            "field": "price_vnd",
+            "value": 1206000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1340000,
+        "list_price_vnd": 1340000,
+        "promo_RUN-10_active": false,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-sang-size-43-holdout",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C018",
+    "synthetic_customer": false,
+    "address": "160 Ba Cu, TP Vũng Tàu, Bà Rịa - Vũng Tàu",
+    "dates": {
+      "call_1": "2026-10-20"
+    },
+    "choices": {
+      "cust": "C018",
+      "p": "SKU-SN-RUN1-42-DEN",
+      "d1": "2026-10-20"
+    }
+  }
+}

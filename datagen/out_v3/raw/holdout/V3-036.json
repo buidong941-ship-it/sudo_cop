@@ -1,0 +1,82 @@
+{
+  "scenario_id": "V3-036",
+  "level": "M2",
+  "persona": "khach_quay_lai_sau_8_thang",
+  "hard_case": "quay_lai_sau_8_thang",
+  "customer_phone": "0977879432",
+  "customer_name": "Loan",
+  "honorific": "chị",
+  "notes": "C033 có phiên Zalo 29/03 (hơn 6 tháng). Giá cũ chỉ là lịch sử, phải báo lại giá hiện tại; địa chỉ giao là địa chỉ mới khách đọc. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-28",
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_loan90",
+      "seed_history": [
+        {
+          "session_id": "S-OLD-2",
+          "date": "2026-03-29",
+          "channel": "zalo_oa",
+          "summary": "Hỏi nồi chiên Xiaomi 4.5L, báo giá 1.590.000đ, khách nói 'để tết mua'",
+          "outcome": "hen_goi_lai"
+        }
+      ],
+      "customer_goal": "mua noi chien sau 7 thang",
+      "customer_turns": [
+        "Em ơi, hồi tháng 3 chị có hỏi nồi chiên bên em, nói để Tết mua đó.",
+        "Giờ chị lấy luôn cái Xiaomi 4.5L đó, giá còn 1.590.000 không em?",
+        "Ok em lên đơn giao về 140 Nguyễn Huệ, TP Huế, Thừa Thiên Huế nha, chị nhận hàng rồi trả tiền."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AF-XM",
+        "price_quoted_vnd": 1590000,
+        "address": "140 Nguyễn Huệ, TP Huế, Thừa Thiên Huế",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-AF-XM",
+          "price_vnd": 1590000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "1 triệu 590",
+          "1,590,000",
+          "1.590.000",
+          "1590000",
+          "1590k",
+          "1tr590"
+        ]
+      },
+      "memory_expectation": {
+        "address": "140 Nguyễn Huệ, TP Huế, Thừa Thiên Huế",
+        "stale_session": "S-OLD-2",
+        "intent_cooled": true
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1590000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-quay-lai-zalo-noi-chien-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C033",
+    "synthetic_customer": false,
+    "address": "140 Nguyễn Huệ, TP Huế, Thừa Thiên Huế",
+    "dates": {
+      "call_1": "2026-10-28"
+    },
+    "choices": {
+      "cust": "C033",
+      "p": "SKU-AF-XM",
+      "d1": "2026-10-28",
+      "new_address": "140 Nguyễn Huệ, TP Huế, Thừa Thiên Huế"
+    }
+  }
+}

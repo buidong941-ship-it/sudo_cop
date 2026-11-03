@@ -1,6 +1,16 @@
 # Đề xuất 03/11/2026: sinh thêm dữ liệu mới
 
-**Trạng thái: CHỜ DUYỆT (D45).** Chưa sinh dữ liệu, chưa sửa code. Tài liệu này chỉ ghi đánh giá và đề xuất.
+**Trạng thái: ĐÃ LÀM PHẦN LỚN (D45, 03/11).** Người dùng yêu cầu sinh hết; kết quả ở `docs/DATASET.md` mục 9.
+
+| Mục | Kết quả 03/11 |
+|---|---|
+| 1. Holdout v3 | **Xong:** 77 kịch bản, 21 template, đóng băng sha256 (`datagen/out_v3`) |
+| 2. Ca bẫy guardrail | **Xong (phần văn bản):** injection hotline/chat, giả danh nội bộ, CCCD/STK đọc bằng chữ, ASR rè, tin nhắn dài, hỏi bot giữa lúc mua. Chưa có: tool lỗi giữa chừng (mock chưa hỗ trợ) |
+| 3. Audio 3 miền | **Chỉ có kịch bản văn bản** (đọc số tiền/SĐT); chưa sinh audio vì container không có GPU/HuggingFace |
+| 4. Slot đáp án còn thiếu | **Xong (dev):** restock_date, refund_vnd, baby_age, objection |
+| 5. synth_slots | **Đợt b3:** 113 câu (tổng 266) |
+| 6. Mẹ & bé, đa kênh | **Xong (dev):** 12 kịch bản mẹ & bé, 6 kịch bản Zalo ↔ hotline (+ 9 kịch bản đa kênh trong holdout) |
+| 7. Simulator (M2) | **Chưa làm:** cần LLM chạy được |
 
 ## 1. Kết luận ngắn
 

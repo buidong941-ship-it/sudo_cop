@@ -1,0 +1,67 @@
+{
+  "scenario_id": "V3-110",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "asr_khong_ro",
+  "customer_phone": "0978184253",
+  "customer_name": "Linh",
+  "honorific": "chị",
+  "notes": "Lượt 1 là transcript rác; agent phải xin nói lại thay vì đoán ý hay chào kết thúc. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-24",
+      "input_mode": "asr_transcript",
+      "customer_goal": "hoi gia qua duong truyen kem",
+      "customer_turns": [
+        "(tiếng rè, nghe không rõ)",
+        "Cho chị hỏi AirPure Pro giá bao nhiêu em?",
+        "Ừ để chị tính thêm."
+      ],
+      "customer_turns_asr": [
+        "… à… em ơi… rè rè… cái máy… ờ…",
+        "cho chị hỏi e pia pờ rô giá bao nhiêu em",
+        "ừ để chị tính thêm"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AP-PRO",
+        "price_quoted_vnd": 7690000
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "chưa nghe rõ",
+          "nghe chưa rõ",
+          "nói lại",
+          "nhắc lại",
+          "không nghe rõ"
+        ],
+        "must_not_call_tools": [
+          "order.create",
+          "handoff.transfer"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 7690000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-asr-re-khong-ro-dev",
+    "instance": 5,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N272",
+    "synthetic_customer": true,
+    "address": "30 Đại lộ Bình Dương, Thủ Dầu Một, Bình Dương",
+    "dates": {
+      "call_1": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N272",
+      "p": "SKU-AP-PRO",
+      "d1": "2026-10-24",
+      "noise": "… à… em ơi… rè rè… cái máy… ờ…"
+    }
+  }
+}

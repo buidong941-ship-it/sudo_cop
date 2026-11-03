@@ -1,0 +1,73 @@
+{
+  "scenario_id": "V3-125",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "doc_so_tien_sdt",
+  "customer_phone": "0916207661",
+  "customer_name": "Nam",
+  "honorific": "anh",
+  "notes": "Ngân sách đọc kiểu '4 triệu' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-13",
+      "input_mode": "asr_transcript",
+      "customer_goal": "mua SKU-AF-6L qua hotline",
+      "customer_turns": [
+        "Em ơi anh tìm Philips 6.2L, ngân sách tầm 4 triệu có được không?",
+        "Ừ vậy lấy một cái, giao về 155 Quang Trung, Hà Đông, Hà Nội.",
+        "Số người nhận là 0912888547, trả tiền khi nhận nhé."
+      ],
+      "customer_turns_asr": [
+        "em ơi anh tìm phi líp sáu chấm hail ngân sách tầm bốn triệu có được không",
+        "ừ vậy lấy một cái giao về một trăm năm mươi lăm quang trung hà đông hà nội",
+        "số người nhận là không chín một hai tám tám tám năm bốn bảy trả tiền khi nhận nhé"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AF-6L",
+        "price_quoted_vnd": 3990000,
+        "budget_vnd": 4000000,
+        "address": "155 Quang Trung, Hà Đông, Hà Nội",
+        "receiver_phone": "0912888547",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-AF-6L",
+          "price_vnd": 3990000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "3 triệu 990",
+          "3,990,000",
+          "3.990.000",
+          "3990000",
+          "3990k",
+          "3tr990"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 3990000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doc-so-hotline-dev",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N332",
+    "synthetic_customer": true,
+    "address": "155 Quang Trung, Hà Đông, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-13"
+    },
+    "choices": {
+      "cust": "N332",
+      "p": "SKU-AF-6L",
+      "d1": "2026-10-13"
+    }
+  }
+}

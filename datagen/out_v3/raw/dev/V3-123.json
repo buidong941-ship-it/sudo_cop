@@ -1,0 +1,73 @@
+{
+  "scenario_id": "V3-123",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "doc_so_tien_sdt",
+  "customer_phone": "0933066191",
+  "customer_name": "Long",
+  "honorific": "anh",
+  "notes": "Ngân sách đọc kiểu '2 triệu' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-15",
+      "input_mode": "asr_transcript",
+      "customer_goal": "mua SKU-MB-STER qua hotline",
+      "customer_turns": [
+        "Em ơi anh tìm Moaz Bebe, ngân sách tầm 2 triệu có được không?",
+        "Ừ vậy lấy một cái, giao về 42 Quang Trung, TP Vinh, Nghệ An.",
+        "Số người nhận là 0944272566, trả tiền khi nhận nhé."
+      ],
+      "customer_turns_asr": [
+        "em ơi anh tìm mo a bê bê ngân sách tầm hai triệu có được không",
+        "ừ vậy lấy một cái giao về bốn mươi hai quang trung tp vinh nghệ an",
+        "số người nhận là không chín bốn bốn hai bảy hai năm sáu sáu trả tiền khi nhận nhé"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STER",
+        "price_quoted_vnd": 1890000,
+        "budget_vnd": 2000000,
+        "address": "42 Quang Trung, TP Vinh, Nghệ An",
+        "receiver_phone": "0944272566",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-STER",
+          "price_vnd": 1890000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "1 triệu 890",
+          "1,890,000",
+          "1.890.000",
+          "1890000",
+          "1890k",
+          "1tr890"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doc-so-hotline-dev",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N323",
+    "synthetic_customer": true,
+    "address": "42 Quang Trung, TP Vinh, Nghệ An",
+    "dates": {
+      "call_1": "2026-10-15"
+    },
+    "choices": {
+      "cust": "N323",
+      "p": "SKU-MB-STER",
+      "d1": "2026-10-15"
+    }
+  }
+}

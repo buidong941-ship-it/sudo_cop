@@ -1,0 +1,146 @@
+{
+ "scenario_id": "V3-037",
+ "level": "M2",
+ "persona": "hai_nguoi_chung_sdt",
+ "hard_case": "chung_sdt_memory_poisoning",
+ "customer_phone": "0958421083",
+ "customer_name": "Loan",
+ "honorific": "cô",
+ "notes": "SĐT dùng chung C034/C035. Cuộc 1 cô Loan chốt RO9 (nối phiên cũ S-OLD-3); cuộc 2 chị Dung hỏi món khác: không được nhắc đơn/địa chỉ của cô Loan. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-19",
+   "seed_history": [
+    {
+     "session_id": "S-OLD-3",
+     "date": "2026-10-09",
+     "channel": "hotline",
+     "summary": "Cô Loan hỏi máy lọc nước RO Karofi 9 lõi, nhà ở Cần Thơ, chờ con gái quyết",
+     "outcome": "hen_goi_lai"
+    }
+   ],
+   "customer_goal": "co Loan chot may loc nuoc",
+   "customer_turns": [
+    "A lô, cô Loan nè con. Cô hỏi máy lọc nước Karofi 9 lõi hôm trước á.",
+    "Con gái cô đồng ý mua rồi, bây giờ giá sao con?",
+    "Được, con đặt cho cô nghe, giao tới 78 Mậu Thân, Ninh Kiều, Cần Thơ, cô đưa tiền mặt."
+   ],
+   "must_carry_over": [
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "speaker_customer_id": "C034",
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000,
+    "address": "78 Mậu Thân, Ninh Kiều, Cần Thơ",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-WF-RO9",
+     "price_vnd": 5990000,
+     "payment": "COD"
+    },
+    "forbidden_claims": [
+     "chị Dung"
+    ]
+   },
+   "memory_expectation": {
+    "product_advised": "SKU-WF-RO9",
+    "must_not_write_to": "C035"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 3,
+   "customer_goal": "chi Dung hoi SKU-AF-XM",
+   "customer_turns": [
+    "Alo em ơi, chị tên Dung, chị muốn hỏi Xiaomi 4.5L xíu.",
+    "Giá bao nhiêu vậy em, có giao tới 56 Lê Văn Việt, Thủ Đức, TP HCM được không?",
+    "Ok vậy lên đơn luôn cho chị nha, nhận hàng chị trả tiền."
+   ],
+   "facts_established": {
+    "speaker_customer_id": "C035",
+    "product_advised": "SKU-AF-XM",
+    "price_quoted_vnd": 1590000,
+    "address": "56 Lê Văn Việt, Thủ Đức, TP HCM",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-AF-XM",
+     "price_vnd": 1590000,
+     "payment": "COD"
+    },
+    "forbidden_claims": [
+     "cô Loan",
+     "máy lọc nước",
+     "Karofi",
+     "Mậu Thân"
+    ]
+   },
+   "memory_expectation": {
+    "product_advised": "SKU-AF-XM",
+    "must_not_write_to": "C034"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 1590000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-chung-sdt-dao-thu-tu-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C034",
+  "synthetic_customer": false,
+  "address": "78 Mậu Thân, Ninh Kiều, Cần Thơ",
+  "dates": {
+   "call_1": "2026-10-19",
+   "call_2": "2026-10-22"
+  },
+  "choices": {
+   "cust": "C034",
+   "p": "SKU-AF-XM",
+   "d1": "2026-10-19",
+   "gap": 3,
+   "dung_addr": "56 Lê Văn Việt, Thủ Đức, TP HCM"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Alo, cô Loan đây con. Hôm trước cô hỏi máy lọc nước Karofi 9 lõi đó.",
+    "Con gái cô đồng ý rồi, giá giờ bao nhiêu con?",
+    "Ừ lên đơn cho cô, giao về 78 Mậu Thân, Ninh Kiều, Cần Thơ, cô trả tiền mặt."
+   ],
+   "call_2": [
+    "Alo em, chị là Dung, chị hỏi Xiaomi 4.5L chút.",
+    "Giá bao nhiêu em, giao về 56 Lê Văn Việt, Thủ Đức, TP HCM được không?",
+    "Ok lên đơn cho chị luôn, thanh toán khi nhận nhé."
+   ]
+  }
+ }
+}

@@ -1,0 +1,132 @@
+{
+  "scenario_id": "V3-004",
+  "level": "M2",
+  "persona": "khach_da_kenh_mau_thuan",
+  "hard_case": "3_kenh_bao_gia_lech",
+  "customer_phone": "0928144976",
+  "customer_name": "Trung",
+  "honorific": "anh",
+  "notes": "Zalo (2026-10-04) báo 1.352.000đ theo RUN2-SALE; Fanpage (2026-10-08) báo 1.690.000đ vì RUN2-SALE hết 2026-10-07. Hotline phải hợp nhất và giải thích. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-04",
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_trung61",
+      "customer_goal": "hoi gia qua zalo",
+      "customer_turns": [
+        "Chào shop, RunLite 2 Pro size 42 màu xám giá nhiêu vậy?",
+        "Đang có giảm giá phải không shop?",
+        "Ok mình suy nghĩ thêm nha."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "variant_sku": "SKU-SN-RUN2-42-XAM",
+        "price_quoted_vnd": 1352000,
+        "promo_code": "RUN2-SALE",
+        "channel": "zalo"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1352000
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 4,
+      "channel": "chat_fanpage",
+      "channel_identity": "fb.trung.122",
+      "customer_goal": "hoi lai gia qua fanpage",
+      "customer_turns": [
+        "Shop ơi, RunLite 2 Pro giờ giá sao rồi?",
+        "Ủa bên Zalo hôm trước báo 1352k mà?",
+        "Ừ để mình tính."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "promo_code"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "price_quoted_vnd": 1690000,
+        "channel": "fanpage"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1690000,
+        "promo_RUN2-SALE_active": false
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_3": {
+      "days_later": 1,
+      "channel": "hotline",
+      "customer_turns": [
+        "Em ơi, anh hỏi trên Zalo thì 1352k, lên Facebook lại 1690k, giờ chốt giá nào?",
+        "Lần sau có chương trình thì báo anh nhé. Giờ anh lấy theo giá hiện tại.",
+        "Giao về 162 Phạm Văn Thuận, Biên Hòa, Đồng Nai, trả tiền mặt."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "promo_code"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "price_quoted_vnd"
+      ],
+      "facts_established": {
+        "address": "162 Phạm Văn Thuận, Biên Hòa, Đồng Nai",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN2-42-XAM",
+          "price_vnd": 1690000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "hết hạn",
+          "kết thúc",
+          "đã hết",
+          "hết chương trình",
+          "hết khuyến mãi"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "price_vnd",
+            "value": 1352000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1690000,
+        "promo_RUN2-SALE_active": false,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-zalo-fanpage-hotline-holdout",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C049",
+    "synthetic_customer": false,
+    "address": "162 Phạm Văn Thuận, Biên Hòa, Đồng Nai",
+    "dates": {
+      "call_1": "2026-10-04",
+      "call_2": "2026-10-08",
+      "call_3": "2026-10-09"
+    },
+    "choices": {
+      "cust": "C049",
+      "p": "SKU-SN-RUN2-42-XAM",
+      "d1": "2026-10-04",
+      "g1": 4,
+      "g2": 1
+    }
+  }
+}

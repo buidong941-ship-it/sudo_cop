@@ -1,0 +1,119 @@
+{
+ "scenario_id": "V3-086",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": null,
+ "customer_phone": "0984835343",
+ "customer_name": "Bích",
+ "honorific": "cô",
+ "notes": "Đổi SKU-JK-WND-S-BE → SKU-JK-WND-M-BE, lần đổi đầu tiên miễn phí (DT-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "mua SKU-JK-WND-S-BE",
+   "customer_turns": [
+    "Lên đơn Windbreak size S màu be giúp cô nhé.",
+    "Địa chỉ 193 Kim Mã, Ba Đình, Hà Nội, cô trả khi nhận hàng."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-JK-WND",
+    "variant_sku": "SKU-JK-WND-S-BE",
+    "size": "S",
+    "color": "be",
+    "price_quoted_vnd": 690000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "193 Kim Mã, Ba Đình, Hà Nội"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 5,
+   "customer_turns": [
+    "Áo cô nhận hơi chật, đổi sang size M được chứ em?",
+    "Mà đổi lần đầu có mất phí ship gì không?",
+    "Ok, đổi giúp cô, giữ màu be nhé em."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "variant_sku"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised",
+    "color",
+    "address"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "exchange_size",
+     "new_variant_sku": "SKU-JK-WND-M-BE"
+    },
+    "must_say_any": [
+     "miễn phí",
+     "không mất phí",
+     "không tốn phí",
+     "0đ"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "exchange_fee_vnd",
+      "value": 30000
+     },
+     {
+      "field": "exchange_fee_vnd",
+      "value": 20000
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "exchange_fee_vnd": 0,
+    "new_size_in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-size-mien-phi-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N174",
+  "synthetic_customer": true,
+  "address": "193 Kim Mã, Ba Đình, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-15",
+   "call_2": "2026-10-20"
+  },
+  "choices": {
+   "cust": "N174",
+   "p": "SKU-JK-WND-S-BE",
+   "d1": "2026-10-15",
+   "gap": 5
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi lấy cho cô Windbreak size S màu be.",
+    "Giao về 193 Kim Mã, Ba Đình, Hà Nội, cô trả tiền khi nhận."
+   ],
+   "call_2": [
+    "Cô nhận áo rồi mà hơi chật, đổi lên size M giúp cô được không?",
+    "Đổi lần đầu có mất phí ship không em?",
+    "Ok em đổi giúp cô, giữ màu be nhé."
+   ]
+  }
+ }
+}

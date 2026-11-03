@@ -1,0 +1,97 @@
+{
+  "scenario_id": "V3-084",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": null,
+  "customer_phone": "0920672189",
+  "customer_name": "Vy",
+  "honorific": "chị",
+  "notes": "Đổi SKU-SN-RUN2-42-DEN → SKU-SN-RUN2-43-DEN, lần đổi đầu tiên miễn phí (DT-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-18",
+      "customer_goal": "mua SKU-SN-RUN2-42-DEN",
+      "customer_turns": [
+        "Em ơi lấy cho chị RunLite 2 Pro size 42 màu đen.",
+        "Giao về 178 Đại lộ Bình Dương, Thủ Dầu Một, Bình Dương, chị trả tiền khi nhận."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "variant_sku": "SKU-SN-RUN2-42-DEN",
+        "size": 42,
+        "color": "den",
+        "price_quoted_vnd": 1521000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "178 Đại lộ Bình Dương, Thủ Dầu Một, Bình Dương"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 6,
+      "customer_turns": [
+        "Chị nhận giày rồi mà hơi chật, đổi lên size 43 giúp chị được không?",
+        "Đổi lần đầu có mất phí ship không em?",
+        "Ok em đổi giúp chị, giữ màu đen nhé."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "variant_sku"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised",
+        "color",
+        "address"
+      ],
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "exchange_size",
+          "new_variant_sku": "SKU-SN-RUN2-43-DEN"
+        },
+        "must_say_any": [
+          "miễn phí",
+          "không mất phí",
+          "không tốn phí",
+          "0đ"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "exchange_fee_vnd",
+            "value": 30000
+          },
+          {
+            "field": "exchange_fee_vnd",
+            "value": 20000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "exchange_fee_vnd": 0,
+        "new_size_in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-size-mien-phi-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N167",
+    "synthetic_customer": true,
+    "address": "178 Đại lộ Bình Dương, Thủ Dầu Một, Bình Dương",
+    "dates": {
+      "call_1": "2026-10-18",
+      "call_2": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N167",
+      "p": "SKU-SN-RUN2-42-DEN",
+      "d1": "2026-10-18",
+      "gap": 6
+    }
+  }
+}

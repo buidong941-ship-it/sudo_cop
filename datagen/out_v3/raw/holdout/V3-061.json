@@ -1,0 +1,120 @@
+{
+  "scenario_id": "V3-061",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "3_phien_thong_tin_thay_doi",
+  "customer_phone": "0945300725",
+  "customer_name": "Dũng",
+  "honorific": "anh",
+  "notes": "Địa chỉ đổi ở phiên 3 khi đơn chưa giao (dự kiến 2026-10-21): phải cập nhật đơn và bộ nhớ, địa chỉ cũ bị thay thế. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-14",
+      "customer_goal": "hoi SKU-MB-STER",
+      "customer_turns": [
+        "Cho anh hỏi Moaz Bebe giá bao nhiêu em?",
+        "Nhà anh ở 52 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk, giao mất mấy ngày?",
+        "Để anh bàn với nhà đã."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STER",
+        "price_quoted_vnd": 1890000,
+        "address": "52 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk",
+        "blocker": "ban voi nha"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 2,
+      "customer_turns": [
+        "Nhà anh đồng ý rồi, lên đơn Moaz Bebe hôm trước nhé em.",
+        "Giao về địa chỉ hôm trước, trả tiền khi nhận."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "address"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "address"
+      ],
+      "facts_established": {
+        "order_id": "OD600001",
+        "payment": "COD",
+        "product_advised": "SKU-MB-STER"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-STER",
+          "price_vnd": 1890000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_3": {
+      "days_later": 1,
+      "customer_turns": [
+        "Em ơi đơn Moaz Bebe của anh giao chưa em?",
+        "Anh mới chuyển chỗ ở, em đổi giao về 92 Pasteur, Quận 1, TP HCM giúp anh nhé."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "product_advised"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised",
+        "payment"
+      ],
+      "facts_established": {
+        "address": "92 Pasteur, Quận 1, TP HCM"
+      },
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "update_address"
+        },
+        "max_agent_questions": 1
+      },
+      "memory_expectation": {
+        "address": "92 Pasteur, Quận 1, TP HCM",
+        "superseded": "52 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-ba-phien-doi-dia-chi-don-holdout",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N076",
+    "synthetic_customer": true,
+    "address": "52 Lê Duẩn, Buôn Ma Thuột, Đắk Lắk",
+    "dates": {
+      "call_1": "2026-10-14",
+      "call_2": "2026-10-16",
+      "call_3": "2026-10-17"
+    },
+    "choices": {
+      "cust": "N076",
+      "p": "SKU-MB-STER",
+      "d1": "2026-10-14",
+      "g1": 2,
+      "g2": 1,
+      "addr_b": "92 Pasteur, Quận 1, TP HCM"
+    }
+  }
+}

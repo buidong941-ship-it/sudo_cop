@@ -1,0 +1,100 @@
+{
+ "scenario_id": "V3-009",
+ "level": "M2",
+ "persona": "khach_da_kenh_fb_hotline",
+ "hard_case": null,
+ "customer_phone": "0922808864",
+ "customer_name": "Tú",
+ "honorific": "anh",
+ "notes": "Khách không nhắc lại tên sản phẩm ở hotline: agent phải nối kênh Fanpage → hotline qua CRM và nhớ sản phẩm, giá, rào cản. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-21",
+   "channel": "chat_fanpage",
+   "channel_identity": "fb.tú.905",
+   "customer_goal": "hoi SKU-BDL-MOM qua fanpage",
+   "customer_turns": [
+    "Shop ơi cho mình hỏi Combo Spectra S1 + máy hâm sữa Fatz + 50 túi trữ sữa với.",
+    "Giá bao nhiêu vậy shop?",
+    "Ok để mình hỏi mẹ đã nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-BDL-MOM",
+    "price_quoted_vnd": 4790000,
+    "blocker": "hoi mẹ"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4790000,
+    "in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 3,
+   "channel": "hotline",
+   "customer_turns": [
+    "Alo, hôm trước anh hỏi bên em qua Fanpage đó em.",
+    "Giờ mẹ anh đồng ý rồi, lên đơn giúp anh nha.",
+    "Ship tới 135 Lê Lợi, TP Bắc Ninh, Bắc Ninh, nhận rồi anh thanh toán."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "blocker"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "address": "135 Lê Lợi, TP Bắc Ninh, Bắc Ninh",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-BDL-MOM",
+     "price_vnd": 4790000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4790000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-fanpage-roi-hotline-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C028",
+  "synthetic_customer": false,
+  "address": "135 Lê Lợi, TP Bắc Ninh, Bắc Ninh",
+  "dates": {
+   "call_1": "2026-10-21",
+   "call_2": "2026-10-24"
+  },
+  "choices": {
+   "cust": "C028",
+   "p": "SKU-BDL-MOM",
+   "d1": "2026-10-21",
+   "gap": 3
+  },
+  "naturalized": {
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_2": [
+    "Alo em, hôm trước anh có nhắn Fanpage hỏi đồ bên em đó.",
+    "Mẹ anh đồng ý rồi, em lên đơn luôn nhé.",
+    "Giao về 135 Lê Lợi, TP Bắc Ninh, Bắc Ninh, trả tiền khi nhận."
+   ]
+  }
+ }
+}

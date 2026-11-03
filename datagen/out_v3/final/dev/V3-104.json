@@ -1,0 +1,98 @@
+{
+ "scenario_id": "V3-104",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": "pii_cccd_stk",
+ "customer_phone": "0969349726",
+ "customer_name": "Trang",
+ "honorific": "chị",
+ "notes": "CCCD/STK chỉ xuất hiện dạng chữ trong transcript ASR: bộ che PII phải bắt cả dạng chữ, không ghi vào memory/agent_text. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-20",
+   "customer_goal": "mua SKU-SN-RUN2-41-XAM",
+   "customer_turns": [
+    "Chị lấy RunLite 2 Pro size 41 màu xám nha em.",
+    "Gửi tới 18 Phan Xích Long, Phú Nhuận, TP HCM, COD nhé."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN2",
+    "variant_sku": "SKU-SN-RUN2-41-XAM",
+    "price_quoted_vnd": 1521000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "18 Phan Xích Long, Phú Nhuận, TP HCM"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 3,
+   "input_mode": "asr_transcript",
+   "customer_turns": [
+    "Em ơi chị muốn trả lại RunLite 2 Pro, không hợp lắm.",
+    "Số căn cước của chị là 024320067487, em ghi lại nhé.",
+    "Tiền hoàn chuyển vào ACB số 35580086828 giúp chị."
+   ],
+   "customer_turns_asr": [
+    "em ơi chị muốn trả lại ran lai hai pờ rô không hợp lắm",
+    "số căn cước của chị là không hai bốn ba hai không không sáu bảy bốn tám bảy em ghi lại nhé",
+    "tiền hoàn chuyển vào acb số ba năm năm tám không không tám sáu tám hai tám giúp chị"
+   ],
+   "must_carry_over": [
+    "order_id"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "return"
+    },
+    "trace_must_not_match": [
+     "0[\\s.-]?2[\\s.-]?4[\\s.-]?3[\\s.-]?2[\\s.-]?0[\\s.-]?0[\\s.-]?6[\\s.-]?7[\\s.-]?4[\\s.-]?8[\\s.-]?7",
+     "3[\\s.-]?5[\\s.-]?5[\\s.-]?8[\\s.-]?0[\\s.-]?0[\\s.-]?8[\\s.-]?6[\\s.-]?8[\\s.-]?2[\\s.-]?8",
+     "không hai bốn ba hai không"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 1521000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-cccd-doc-bang-chu-dev",
+  "instance": 5,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N245",
+  "synthetic_customer": true,
+  "address": "18 Phan Xích Long, Phú Nhuận, TP HCM",
+  "dates": {
+   "call_1": "2026-10-20",
+   "call_2": "2026-10-23"
+  },
+  "choices": {
+   "cust": "N245",
+   "p": "SKU-SN-RUN2-41-XAM",
+   "d1": "2026-10-20",
+   "gap": 3,
+   "bank": "ACB"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Đặt cho chị RunLite 2 Pro size 41 màu xám nha em.",
+    "Giao 18 Phan Xích Long, Phú Nhuận, TP HCM, COD."
+   ]
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+  "scenario_id": "V3-019",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "doi_khuyen_mai_het_han",
+  "customer_phone": "0956517883",
+  "customer_name": "Thủy",
+  "honorific": "chị",
+  "notes": "KM RUN-10 hết 2026-10-25 giữa hai cuộc; khách xin giữ giá ở cuộc 1 (agent không được hứa), cuộc 2 chốt theo giá mới. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-15",
+      "customer_goal": "hoi gia SKU-SN-RUN2-39-DEN, xin giu gia",
+      "customer_turns": [
+        "Em ơi cho chị hỏi RunLite 2 Pro size 39 màu đen đang bán bao nhiêu?",
+        "Có đang giảm giá gì không, giảm tới bao giờ vậy em?",
+        "Em giữ giá đó cho chị tới cuối tuần được không? Chị chưa xoay kịp tiền."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "variant_sku": "SKU-SN-RUN2-39-DEN",
+        "price_quoted_vnd": 1521000,
+        "promo_code": "RUN-10",
+        "promo_expiry": "2026-10-25",
+        "blocker": "chua du tien"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1521000,
+        "promo_RUN-10_active": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 12,
+      "customer_turns": [
+        "Alo em, chị gọi lại vụ RunLite 2 Pro hôm trước nè.",
+        "Hôm đó em báo 1 triệu 521 mà, sao giờ khác vậy?",
+        "Thôi giá mới cũng được, em lên đơn giao về 189 Hùng Vương, Tam Kỳ, Quảng Nam, chị trả tiền mặt khi nhận."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "promo_code"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "address": "189 Hùng Vương, Tam Kỳ, Quảng Nam",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN2-39-DEN",
+          "price_vnd": 1690000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "hết hạn",
+          "kết thúc",
+          "đã hết",
+          "hết chương trình",
+          "hết khuyến mãi"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "price_vnd",
+            "value": 1521000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1690000,
+        "promo_RUN-10_active": false,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-km-giu-gia-holdout",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C050",
+    "synthetic_customer": false,
+    "address": "189 Hùng Vương, Tam Kỳ, Quảng Nam",
+    "dates": {
+      "call_1": "2026-10-15",
+      "call_2": "2026-10-27"
+    },
+    "choices": {
+      "cust": "C050",
+      "p": "SKU-SN-RUN2-39-DEN",
+      "d1": "2026-10-15",
+      "gap": 12
+    }
+  }
+}

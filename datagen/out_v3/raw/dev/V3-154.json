@@ -1,0 +1,78 @@
+{
+  "scenario_id": "V3-154",
+  "level": "M2",
+  "persona": "khach_hoi_nhieu_khong_mua",
+  "hard_case": null,
+  "customer_phone": "0931194212",
+  "customer_name": "Hùng",
+  "honorific": "anh",
+  "notes": "Khách hỏi nhiều không mua; 'mai 14 giờ' = 2026-10-17T14:00 (ITN thời gian tương đối). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-13",
+      "customer_goal": "so sanh 3 mau",
+      "customer_turns": [
+        "AirPure X với Xiaomi Smart 4 Lite khác nhau chỗ nào em?",
+        "Còn Samsung AX40 thì sao?",
+        "Để anh xem thêm review đã."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AP-X",
+        "price_quoted_vnd": 4890000,
+        "blocker": "so sanh mau khac"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 4890000
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 3,
+      "customer_turns": [
+        "Anh vẫn đang phân vân mấy mẫu hôm trước.",
+        "Mai 14 giờ em gọi lại cho anh nhé, giờ anh bận."
+      ],
+      "must_carry_over": [
+        "product_advised"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "success_if": {
+        "tool_called": "schedule.callback",
+        "args_match": {
+          "customer_phone": "0931194212",
+          "callback_at": "2026-10-17T14:00"
+        }
+      },
+      "ground_truth_facts": {
+        "callback_at": "2026-10-17T14:00"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-so-ba-mau-hen-lai-dev",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N445",
+    "synthetic_customer": true,
+    "address": "173 Minh Khai, Hai Bà Trưng, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-13",
+      "call_2": "2026-10-16"
+    },
+    "choices": {
+      "cust": "N445",
+      "d1": "2026-10-13",
+      "gap": 3,
+      "hour": 14,
+      "trio": [
+        "SKU-AP-X",
+        "SKU-XM-4L",
+        "SKU-SS-AX40"
+      ]
+    }
+  }
+}

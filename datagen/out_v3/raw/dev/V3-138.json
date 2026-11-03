@@ -1,0 +1,115 @@
+{
+  "scenario_id": "V3-138",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": null,
+  "customer_phone": "0991378189",
+  "customer_name": "Phúc",
+  "honorific": "anh",
+  "notes": "refund_vnd = 1.490.000đ phải nhớ từ phiên trả hàng để trả lời ở phiên 3. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-18",
+      "customer_goal": "mua SKU-JK-DWN-M-BE",
+      "customer_turns": [
+        "Lấy cho anh Warmly size M màu be em nhé.",
+        "Giao về 22 Phan Xích Long, Phú Nhuận, TP HCM, COD."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-JK-DWN",
+        "variant_sku": "SKU-JK-DWN-M-BE",
+        "price_quoted_vnd": 1490000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "22 Phan Xích Long, Phú Nhuận, TP HCM"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 4,
+      "customer_turns": [
+        "Em ơi hàng anh nhận rồi nhưng không như hình, anh trả lại nhé.",
+        "Hoàn tiền bao lâu vậy em?"
+      ],
+      "must_carry_over": [
+        "order_id"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "facts_established": {
+        "refund_vnd": 1490000
+      },
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "return"
+        },
+        "must_say_any": [
+          "3-5 ngày",
+          "3 đến 5 ngày",
+          "3–5 ngày",
+          "ba đến năm ngày"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_vnd": 1490000,
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_3": {
+      "days_later": 3,
+      "customer_turns": [
+        "Tiền hoàn của anh là bao nhiêu vậy em, anh quên rồi?",
+        "Ừ cảm ơn em."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "refund_vnd"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "1 triệu 490",
+          "1,490,000",
+          "1.490.000",
+          "1490000",
+          "1490k",
+          "1tr490"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hoi-tien-hoan-dev",
+    "instance": 3,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N384",
+    "synthetic_customer": true,
+    "address": "22 Phan Xích Long, Phú Nhuận, TP HCM",
+    "dates": {
+      "call_1": "2026-10-18",
+      "call_2": "2026-10-22",
+      "call_3": "2026-10-25"
+    },
+    "choices": {
+      "cust": "N384",
+      "p": "SKU-JK-DWN-M-BE",
+      "d1": "2026-10-18",
+      "g1": 4,
+      "g2": 3
+    }
+  }
+}

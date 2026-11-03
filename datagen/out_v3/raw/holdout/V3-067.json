@@ -1,0 +1,89 @@
+{
+  "scenario_id": "V3-067",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": "doi_san_pham_hoan_chenh_lech",
+  "customer_phone": "0991670121",
+  "customer_name": "Hằng",
+  "honorific": "cô",
+  "notes": "Đổi SKU-SN-TRK-42-XAM (1.990.000đ) sang SKU-SN-CAS-42-XAM (890.000đ): hoàn 1.100.000đ trong 3–5 ngày làm việc, lần đổi đầu miễn phí. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-16",
+      "customer_goal": "mua SKU-SN-TRK-42-XAM",
+      "customer_turns": [
+        "Lấy cho cô HikePro size 42 màu xám nhé.",
+        "Giao về 31 Phạm Văn Thuận, Biên Hòa, Đồng Nai, ship COD."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-TRK",
+        "variant_sku": "SKU-SN-TRK-42-XAM",
+        "price_quoted_vnd": 1990000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "31 Phạm Văn Thuận, Biên Hòa, Đồng Nai"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 6,
+      "customer_turns": [
+        "Em ơi đôi HikePro cô nhận rồi, đi thử thấy nặng chân quá.",
+        "Cô đổi sang Urban Classic size 42 màu xám được không? Mẫu đó rẻ hơn phải không em?",
+        "Vậy phần chênh lệch em hoàn lại cho cô nhé, đổi giúp cô."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "product_advised",
+        "price_quoted_vnd"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised",
+        "address"
+      ],
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "exchange_product",
+          "new_variant_sku": "SKU-SN-CAS-42-XAM"
+        },
+        "must_say_any": [
+          "1 triệu 1",
+          "1,100,000",
+          "1.100.000",
+          "1100000",
+          "1100k",
+          "1tr1"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_vnd": 1100000,
+        "refund_days": "3-5 ngày làm việc",
+        "exchange_fee_vnd": 0,
+        "price_vnd": 890000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doi-giay-re-hon-holdout",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N098",
+    "synthetic_customer": true,
+    "address": "31 Phạm Văn Thuận, Biên Hòa, Đồng Nai",
+    "dates": {
+      "call_1": "2026-10-16",
+      "call_2": "2026-10-22"
+    },
+    "choices": {
+      "cust": "N098",
+      "p": "SKU-SN-TRK-42-XAM",
+      "d1": "2026-10-16",
+      "gap": 6
+    }
+  }
+}

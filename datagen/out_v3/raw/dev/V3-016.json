@@ -1,0 +1,88 @@
+{
+  "scenario_id": "V3-016",
+  "level": "M2",
+  "persona": "khach_da_kenh_fb_hotline",
+  "hard_case": null,
+  "customer_phone": "0901304118",
+  "customer_name": "Yến",
+  "honorific": "chị",
+  "notes": "Hotline → Zalo: size/màu đã chốt qua điện thoại phải dùng lại trên Zalo. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-15",
+      "customer_goal": "hoi SKU-JK-WND-S-NAVY qua hotline",
+      "customer_turns": [
+        "Em ơi Windbreak size S màu xanh navy còn không?",
+        "Giá bao nhiêu em?",
+        "Để chị nhắn Zalo chốt sau nhé."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-JK-WND",
+        "variant_sku": "SKU-JK-WND-S-NAVY",
+        "price_quoted_vnd": 690000,
+        "size": "S",
+        "color": "navy"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 690000,
+        "in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 1,
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_yến83",
+      "customer_turns": [
+        "Shop ơi mình gọi hotline hỏi đôi/cái hôm qua đó",
+        "Chốt đúng size màu đó nha, giao 162 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng, COD"
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "variant_sku",
+        "price_quoted_vnd"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "size",
+        "color"
+      ],
+      "facts_established": {
+        "address": "162 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-JK-WND-S-NAVY",
+          "price_vnd": 690000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 690000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hotline-roi-zalo-dev",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "C021",
+    "synthetic_customer": false,
+    "address": "162 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+    "dates": {
+      "call_1": "2026-10-15",
+      "call_2": "2026-10-16"
+    },
+    "choices": {
+      "cust": "C021",
+      "p": "SKU-JK-WND-S-NAVY",
+      "d1": "2026-10-15",
+      "gap": 1
+    }
+  }
+}

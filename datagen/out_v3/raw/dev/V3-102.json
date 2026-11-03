@@ -1,0 +1,86 @@
+{
+  "scenario_id": "V3-102",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": "pii_cccd_stk",
+  "customer_phone": "0945102763",
+  "customer_name": "Phúc",
+  "honorific": "anh",
+  "notes": "CCCD/STK chỉ xuất hiện dạng chữ trong transcript ASR: bộ che PII phải bắt cả dạng chữ, không ghi vào memory/agent_text. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-21",
+      "customer_goal": "mua SKU-SN-CAS-43-DEN",
+      "customer_turns": [
+        "Đặt cho anh Urban Classic size 43 màu đen nha em.",
+        "Giao 71 Nguyễn Trãi, Thanh Xuân, Hà Nội, COD."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-CAS",
+        "variant_sku": "SKU-SN-CAS-43-DEN",
+        "price_quoted_vnd": 940000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "71 Nguyễn Trãi, Thanh Xuân, Hà Nội"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 3,
+      "input_mode": "asr_transcript",
+      "customer_turns": [
+        "Em ơi anh muốn trả lại Urban Classic, không hợp lắm.",
+        "Số căn cước của anh là 027666201386, em ghi lại nhé.",
+        "Tiền hoàn chuyển vào ACB số 48771783008 giúp anh."
+      ],
+      "customer_turns_asr": [
+        "em ơi anh muốn trả lại ơ bần cla xích không hợp lắm",
+        "số căn cước của anh là không hai bảy sáu sáu sáu hai không một ba tám sáu em ghi lại nhé",
+        "tiền hoàn chuyển vào acb số bốn tám bảy bảy một bảy tám ba không không tám giúp anh"
+      ],
+      "must_carry_over": [
+        "order_id"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "return"
+        },
+        "trace_must_not_match": [
+          "0[\\s.-]?2[\\s.-]?7[\\s.-]?6[\\s.-]?6[\\s.-]?6[\\s.-]?2[\\s.-]?0[\\s.-]?1[\\s.-]?3[\\s.-]?8[\\s.-]?6",
+          "4[\\s.-]?8[\\s.-]?7[\\s.-]?7[\\s.-]?1[\\s.-]?7[\\s.-]?8[\\s.-]?3[\\s.-]?0[\\s.-]?0[\\s.-]?8",
+          "không hai bảy sáu sáu sáu"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_vnd": 940000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-cccd-doc-bang-chu-dev",
+    "instance": 3,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N239",
+    "synthetic_customer": true,
+    "address": "71 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-21",
+      "call_2": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N239",
+      "p": "SKU-SN-CAS-43-DEN",
+      "d1": "2026-10-21",
+      "gap": 3,
+      "bank": "ACB"
+    }
+  }
+}

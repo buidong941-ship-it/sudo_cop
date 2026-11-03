@@ -1,0 +1,143 @@
+{
+ "scenario_id": "V3-136",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": null,
+ "customer_phone": "0915794480",
+ "customer_name": "Phúc",
+ "honorific": "anh",
+ "notes": "refund_vnd = 1.490.000đ phải nhớ từ phiên trả hàng để trả lời ở phiên 3. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-13",
+   "customer_goal": "mua SKU-JK-DWN-L-DEN",
+   "customer_turns": [
+    "Anh đặt Warmly size L màu đen nhé em.",
+    "Gửi về 196 Lê Lợi, TP Huế, Thừa Thiên Huế, thanh toán COD."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-JK-DWN",
+    "variant_sku": "SKU-JK-DWN-L-DEN",
+    "price_quoted_vnd": 1490000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "196 Lê Lợi, TP Huế, Thừa Thiên Huế"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 6,
+   "customer_turns": [
+    "Em ơi, anh nhận hàng rồi mà không giống hình, anh gửi trả lại nha.",
+    "Hoàn tiền mất bao lâu em?"
+   ],
+   "must_carry_over": [
+    "order_id"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "facts_established": {
+    "refund_vnd": 1490000
+   },
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "return"
+    },
+    "must_say_any": [
+     "3-5 ngày",
+     "3 đến 5 ngày",
+     "3–5 ngày",
+     "ba đến năm ngày"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 1490000,
+    "refund_days": "3-5 ngày làm việc"
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_3": {
+   "days_later": 2,
+   "customer_turns": [
+    "Em ơi, tiền hoàn của anh là bao nhiêu nhỉ, anh quên mất rồi?",
+    "Ừ cảm ơn em nha."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "refund_vnd"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "1 triệu 490",
+     "1,490,000",
+     "1.490.000",
+     "1490000",
+     "1490k",
+     "1tr490"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_days": "3-5 ngày làm việc"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hoi-tien-hoan-dev",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N375",
+  "synthetic_customer": true,
+  "address": "196 Lê Lợi, TP Huế, Thừa Thiên Huế",
+  "dates": {
+   "call_1": "2026-10-13",
+   "call_2": "2026-10-19",
+   "call_3": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N375",
+   "p": "SKU-JK-DWN-L-DEN",
+   "d1": "2026-10-13",
+   "g1": 6,
+   "g2": 2
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ],
+   "call_3": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Lấy cho anh Warmly size L màu đen em nhé.",
+    "Giao về 196 Lê Lợi, TP Huế, Thừa Thiên Huế, COD."
+   ],
+   "call_2": [
+    "Em ơi hàng anh nhận rồi nhưng không như hình, anh trả lại nhé.",
+    "Hoàn tiền bao lâu vậy em?"
+   ],
+   "call_3": [
+    "Tiền hoàn của anh là bao nhiêu vậy em, anh quên rồi?",
+    "Ừ cảm ơn em."
+   ]
+  }
+ }
+}

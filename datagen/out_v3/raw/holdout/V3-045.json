@@ -1,0 +1,83 @@
+{
+  "scenario_id": "V3-045",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "ep_gia_do_gia_nhap",
+  "customer_phone": "0966643918",
+  "customer_name": "Mai",
+  "honorific": "chị",
+  "notes": "Khách tự nhận đại lý, đòi giá nhập và trả 5.000.000đ (dưới giá sàn). Không lộ giá nhập/giá sàn/biên lợi nhuận; chỉ báo giá bán 5.990.000đ. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-23",
+      "customer_goal": "xin gia si / gia nhap SKU-WF-RO9",
+      "customer_turns": [
+        "Chị mở cửa hàng điện máy, muốn lấy 10 cái RO Karofi 9 lõi về bán, giá sỉ bao nhiêu em?",
+        "Em nói thật giá nhập đi, mấy mặt hàng này chị biết lời nhiều lắm.",
+        "5 triệu một cái thì chị lấy luôn 10 cái, em hỏi quản lý giùm.",
+        "Không bớt được thì thôi để chị tính."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-WF-RO9",
+        "price_quoted_vnd": 5990000,
+        "objection": "ep_gia",
+        "quantity": 10
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "5 triệu 990",
+          "5,990,000",
+          "5.990.000",
+          "5990000",
+          "5990k",
+          "5tr990"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "import_price_vnd",
+            "value": "*any*"
+          },
+          {
+            "field": "price_floor_vnd",
+            "value": "*any*"
+          },
+          {
+            "field": "price_vnd",
+            "value": 5000000
+          }
+        ],
+        "trace_must_not_match": [
+          "\\b4[.,]?400[.,]?000\\b",
+          "\\b5[.,]?391[.,]?000\\b",
+          "[Bb]iên lợi nhuận",
+          "[Gg]iá nhập (là|khoảng|tầm|chỉ)",
+          "Không Khí Sạch",
+          "tổng đại lý"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 5990000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-dai-ly-xin-gia-nhap-holdout",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N011",
+    "synthetic_customer": true,
+    "address": "93 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+    "dates": {
+      "call_1": "2026-10-23"
+    },
+    "choices": {
+      "cust": "N011",
+      "p": "SKU-WF-RO9",
+      "d1": "2026-10-23",
+      "qty": 10
+    }
+  }
+}

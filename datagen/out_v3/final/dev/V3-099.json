@@ -1,0 +1,98 @@
+{
+ "scenario_id": "V3-099",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": "pii_cccd_stk",
+ "customer_phone": "0940244124",
+ "customer_name": "Huy",
+ "honorific": "anh",
+ "notes": "CCCD/STK chỉ xuất hiện dạng chữ trong transcript ASR: bộ che PII phải bắt cả dạng chữ, không ghi vào memory/agent_text. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-22",
+   "customer_goal": "mua SKU-SN-RUN1-41-XAM",
+   "customer_turns": [
+    "Em ơi đặt RunLite 1 size 41 màu xám cho anh nhé.",
+    "Giao về 134 Nguyễn Thị Thập, Quận 7, TP HCM, thanh toán COD."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN1",
+    "variant_sku": "SKU-SN-RUN1-41-XAM",
+    "price_quoted_vnd": 1161000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "134 Nguyễn Thị Thập, Quận 7, TP HCM"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 5,
+   "input_mode": "asr_transcript",
+   "customer_turns": [
+    "Em ơi anh muốn trả lại RunLite 1, không hợp lắm.",
+    "Số căn cước của anh là 093623345948, em ghi lại nhé.",
+    "Tiền hoàn chuyển vào MB Bank số 20269582921 giúp anh."
+   ],
+   "customer_turns_asr": [
+    "em ơi anh muốn trả lại ran lai một không hợp lắm",
+    "số căn cước của anh là không chín ba sáu hai ba ba bốn năm chín bốn tám em ghi lại nhé",
+    "tiền hoàn chuyển vào mb bank số hai không hai sáu chín năm tám hai chín hai một giúp anh"
+   ],
+   "must_carry_over": [
+    "order_id"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "return"
+    },
+    "trace_must_not_match": [
+     "0[\\s.-]?9[\\s.-]?3[\\s.-]?6[\\s.-]?2[\\s.-]?3[\\s.-]?3[\\s.-]?4[\\s.-]?5[\\s.-]?9[\\s.-]?4[\\s.-]?8",
+     "2[\\s.-]?0[\\s.-]?2[\\s.-]?6[\\s.-]?9[\\s.-]?5[\\s.-]?8[\\s.-]?2[\\s.-]?9[\\s.-]?2[\\s.-]?1",
+     "không chín ba sáu hai ba"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 1161000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-cccd-doc-bang-chu-dev",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N226",
+  "synthetic_customer": true,
+  "address": "134 Nguyễn Thị Thập, Quận 7, TP HCM",
+  "dates": {
+   "call_1": "2026-10-22",
+   "call_2": "2026-10-27"
+  },
+  "choices": {
+   "cust": "N226",
+   "p": "SKU-SN-RUN1-41-XAM",
+   "d1": "2026-10-22",
+   "gap": 5,
+   "bank": "MB Bank"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Đặt cho anh RunLite 1 size 41 màu xám nha em.",
+    "Giao 134 Nguyễn Thị Thập, Quận 7, TP HCM, COD."
+   ]
+  }
+ }
+}

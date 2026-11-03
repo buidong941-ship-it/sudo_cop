@@ -1,0 +1,73 @@
+{
+  "scenario_id": "V3-127",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "doc_so_tien_sdt",
+  "customer_phone": "0994158846",
+  "customer_name": "Khang",
+  "honorific": "anh",
+  "notes": "Ngân sách đọc kiểu '2 triệu' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-24",
+      "input_mode": "asr_transcript",
+      "customer_goal": "mua SKU-AF-4L qua hotline",
+      "customer_turns": [
+        "Em ơi anh tìm Lock&Lock 4L, ngân sách tầm 2 triệu có được không?",
+        "Ừ vậy lấy một cái, giao về 110 Lê Lợi, TP Huế, Thừa Thiên Huế.",
+        "Số người nhận là 0953531566, trả tiền khi nhận nhé."
+      ],
+      "customer_turns_asr": [
+        "em ơi anh tìm lóc en lóc bốnl ngân sách tầm hai triệu có được không",
+        "ừ vậy lấy một cái giao về một trăm mười lê lợi tp huế thừa thiên huế",
+        "số người nhận là không chín năm ba năm ba một năm sáu sáu trả tiền khi nhận nhé"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AF-4L",
+        "price_quoted_vnd": 1890000,
+        "budget_vnd": 2000000,
+        "address": "110 Lê Lợi, TP Huế, Thừa Thiên Huế",
+        "receiver_phone": "0953531566",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-AF-4L",
+          "price_vnd": 1890000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "1 triệu 890",
+          "1,890,000",
+          "1.890.000",
+          "1890000",
+          "1890k",
+          "1tr890"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doc-so-hotline-dev",
+    "instance": 4,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N337",
+    "synthetic_customer": true,
+    "address": "110 Lê Lợi, TP Huế, Thừa Thiên Huế",
+    "dates": {
+      "call_1": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N337",
+      "p": "SKU-AF-4L",
+      "d1": "2026-10-24"
+    }
+  }
+}

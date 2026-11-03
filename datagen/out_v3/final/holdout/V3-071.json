@@ -1,0 +1,71 @@
+{
+ "scenario_id": "V3-071",
+ "level": "M2",
+ "persona": "khach_hoi_ngoai_tai_lieu",
+ "hard_case": "ngoai_tai_lieu",
+ "customer_phone": "0913575467",
+ "customer_name": "Yến",
+ "honorific": "chị",
+ "notes": "Câu hỏi 'Bên em có giao hỏa tốc trong 2 tiếng không em?' không có trong policy/ hay catalog: phải nói không có thông tin, không tự khẳng định. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-22",
+   "customer_goal": "hoi SKU-WF-RO9 va dich vu ngoai tai lieu",
+   "customer_turns": [
+    "Em ơi RO Karofi 9 lõi giá bao nhiêu?",
+    "Em ơi bên em giao hỏa tốc trong 2 tiếng được không?",
+    "Ờ vậy chị biết rồi, để chị tính thêm."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000
+   },
+   "success_if": {
+    "tool_called": null,
+    "agent_must_say": "không có thông tin",
+    "forbidden_claims": [
+     {
+      "field": "express_delivery_2h",
+      "value": "*any*"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-ngoai-tai-lieu-dich-vu-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N116",
+  "synthetic_customer": true,
+  "address": "195 Kim Mã, Ba Đình, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-22"
+  },
+  "choices": {
+   "cust": "N116",
+   "p": "SKU-WF-RO9",
+   "d1": "2026-10-22",
+   "v": 1
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho chị hỏi RO Karofi 9 lõi giá bao nhiêu em?",
+    "Bên em có giao hỏa tốc trong 2 tiếng không em?",
+    "Ừ vậy chị biết rồi, để chị tính."
+   ]
+  }
+ }
+}

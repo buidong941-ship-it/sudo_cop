@@ -1,0 +1,67 @@
+{
+  "scenario_id": "V3-108",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "asr_khong_ro",
+  "customer_phone": "0976543272",
+  "customer_name": "Khang",
+  "honorific": "anh",
+  "notes": "Lượt 1 là transcript rác; agent phải xin nói lại thay vì đoán ý hay chào kết thúc. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-22",
+      "input_mode": "asr_transcript",
+      "customer_goal": "hoi gia qua duong truyen kem",
+      "customer_turns": [
+        "(tiếng rè, nghe không rõ)",
+        "Cho anh hỏi RO Kangaroo 10 lõi giá bao nhiêu em?",
+        "Ừ để anh tính thêm."
+      ],
+      "customer_turns_asr": [
+        "alo alo ờ… rè rè… cái… ờ… bên… nghe không",
+        "cho anh hỏi rô kang ga ru mười lõi giá bao nhiêu em",
+        "ừ để anh tính thêm"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-WF-RO10",
+        "price_quoted_vnd": 6890000
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "chưa nghe rõ",
+          "nghe chưa rõ",
+          "nói lại",
+          "nhắc lại",
+          "không nghe rõ"
+        ],
+        "must_not_call_tools": [
+          "order.create",
+          "handoff.transfer"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 6890000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-asr-re-khong-ro-dev",
+    "instance": 3,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N263",
+    "synthetic_customer": true,
+    "address": "181 Quang Trung, Hà Đông, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-22"
+    },
+    "choices": {
+      "cust": "N263",
+      "p": "SKU-WF-RO10",
+      "d1": "2026-10-22",
+      "noise": "alo alo ờ… rè rè… cái… ờ… bên… nghe không"
+    }
+  }
+}

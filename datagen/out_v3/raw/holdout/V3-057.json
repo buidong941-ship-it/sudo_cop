@@ -1,0 +1,83 @@
+{
+  "scenario_id": "V3-057",
+  "level": "M2",
+  "persona": "khach_mua_nhieu_mon",
+  "hard_case": "nhieu_mon_vuot_cod_ngan_sach",
+  "customer_phone": "0963046301",
+  "customer_name": "Đức",
+  "honorific": "anh",
+  "notes": "Cuộc gọi dài (8 lượt khách, 16 lượt cả hai phía), 4 món, tổng 10.460.000đ > ngân sách 8.000.000đ và > 10 triệu → không COD (VC-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-21",
+      "customer_goal": "mua 4 mon cho nha moi",
+      "customer_turns": [
+        "Chào em, nhà anh mới chuyển về, anh cần sắm mấy món gia dụng.",
+        "Trước tiên là máy lọc không khí, AirPure X giá sao em?",
+        "Thêm một máy lọc nước UF Sunhouse nữa, cái đó bao nhiêu?",
+        "Rồi lấy thêm Xiaomi 4.5L, với một bộ màng lọc thay thế cho AirPure X luôn.",
+        "Tổng cộng hết bao nhiêu em? Anh tính sơ chỉ khoảng 8 triệu thôi.",
+        "Vượt vậy à… thôi kệ, lấy đủ bốn món. Giao về 117 Trần Phú, Nha Trang, Khánh Hòa nhé.",
+        "Anh trả tiền mặt lúc nhận được không em?",
+        "Vậy anh chuyển khoản trước, em lên đơn đi."
+      ],
+      "facts_established": {
+        "basket": [
+          "SKU-AP-X",
+          "SKU-WF-UF",
+          "SKU-AF-XM",
+          "SKU-AP-FLT-X"
+        ],
+        "budget_vnd": 8000000,
+        "address": "117 Trần Phú, Nha Trang, Khánh Hòa",
+        "payment": "bank"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-AP-X",
+          "price_vnd": 4890000,
+          "payment": "bank"
+        },
+        "also_ordered": [
+          "SKU-AP-X",
+          "SKU-WF-UF",
+          "SKU-AF-XM",
+          "SKU-AP-FLT-X"
+        ],
+        "total_match_vnd": 10460000,
+        "must_say_any": [
+          "10 triệu",
+          "10.000.000",
+          "mười triệu",
+          "10tr"
+        ]
+      },
+      "ground_truth_facts": {
+        "total_vnd": 10460000,
+        "cod_allowed": false,
+        "cod_limit_vnd": 10000000
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-bon-mon-nha-moi-holdout",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N057",
+    "synthetic_customer": true,
+    "address": "117 Trần Phú, Nha Trang, Khánh Hòa",
+    "dates": {
+      "call_1": "2026-10-21"
+    },
+    "choices": {
+      "cust": "N057",
+      "pa": "SKU-AP-X",
+      "pw": "SKU-WF-UF",
+      "pf": "SKU-AF-XM",
+      "d1": "2026-10-21"
+    }
+  }
+}

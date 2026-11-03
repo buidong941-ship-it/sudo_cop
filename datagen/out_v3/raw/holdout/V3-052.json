@@ -1,0 +1,73 @@
+{
+  "scenario_id": "V3-052",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "hen_goi_lai_ngay_nghi",
+  "customer_phone": "0913298740",
+  "customer_name": "Bích",
+  "honorific": "cô",
+  "notes": "Gọi ngày 2026-10-22; 'đầu tuần sau, thứ hai ấy' = 26/10 là ngày nghỉ (LN-02) → hẹn sang 27/10 cùng giờ (10:00) và báo khách. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-22",
+      "customer_goal": "hoi SKU-AP-Y, hen goi lai",
+      "customer_turns": [
+        "Cho cô hỏi AirPure Y đang bán bao nhiêu em?",
+        "Cô đang bận, đầu tuần sau, thứ hai ấy tầm 10 giờ sáng em gọi lại cho cô được không?",
+        "Ừ, nhớ gọi đúng giờ nha em."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AP-Y",
+        "price_quoted_vnd": 5200000,
+        "callback_requested": "2026-10-26T10:00"
+      },
+      "success_if": {
+        "tool_called": "schedule.callback",
+        "args_match": {
+          "customer_phone": "0913298740",
+          "callback_at": "2026-10-27T10:00"
+        },
+        "must_say_any": [
+          "27/10",
+          "thứ ba",
+          "ngày 27"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "callback_at",
+            "value": "2026-10-26T10:00"
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 5200000,
+        "callback_at": "2026-10-27T10:00",
+        "holiday": "2026-10-26"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hen-thu-hai-tuan-sau-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N037",
+    "synthetic_customer": true,
+    "address": "100 Hùng Vương, Tam Kỳ, Quảng Nam",
+    "dates": {
+      "call_1": "2026-10-22"
+    },
+    "choices": {
+      "cust": "N037",
+      "p": "SKU-AP-Y",
+      "d1": "2026-10-22",
+      "slot": [
+        "10 giờ sáng",
+        10,
+        0
+      ],
+      "when": "đầu tuần sau, thứ hai ấy"
+    }
+  }
+}

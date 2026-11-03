@@ -1,0 +1,113 @@
+{
+  "scenario_id": "V3-137",
+  "level": "M2",
+  "persona": "khach_da_mua_doi_size",
+  "hard_case": null,
+  "customer_phone": "0930891431",
+  "customer_name": "Đức",
+  "honorific": "anh",
+  "notes": "refund_vnd = 690.000đ phải nhớ từ phiên trả hàng để trả lời ở phiên 3. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-16",
+      "customer_goal": "mua SKU-JK-WND-L-NAVY",
+      "customer_turns": [
+        "Lấy cho anh Windbreak size L màu xanh navy em nhé.",
+        "Giao về 109 Lạch Tray, Ngô Quyền, Hải Phòng, COD."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-JK-WND",
+        "variant_sku": "SKU-JK-WND-L-NAVY",
+        "price_quoted_vnd": 690000,
+        "order_id": "OD600001",
+        "payment": "COD",
+        "address": "109 Lạch Tray, Ngô Quyền, Hải Phòng"
+      },
+      "expected_outcome": "chot_don"
+    },
+    "call_2": {
+      "days_later": 6,
+      "customer_turns": [
+        "Em ơi hàng anh nhận rồi nhưng không như hình, anh trả lại nhé.",
+        "Hoàn tiền bao lâu vậy em?"
+      ],
+      "must_carry_over": [
+        "order_id"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "facts_established": {
+        "refund_vnd": 690000
+      },
+      "success_if": {
+        "tool_called": "order.update",
+        "args_match": {
+          "order_id": "OD600001",
+          "action": "return"
+        },
+        "must_say_any": [
+          "3-5 ngày",
+          "3 đến 5 ngày",
+          "3–5 ngày",
+          "ba đến năm ngày"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_vnd": 690000,
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_3": {
+      "days_later": 2,
+      "customer_turns": [
+        "Tiền hoàn của anh là bao nhiêu vậy em, anh quên rồi?",
+        "Ừ cảm ơn em."
+      ],
+      "must_carry_over": [
+        "order_id",
+        "refund_vnd"
+      ],
+      "must_not_ask": [
+        "order_id",
+        "product_advised"
+      ],
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "690,000",
+          "690.000",
+          "690000",
+          "690k"
+        ]
+      },
+      "ground_truth_facts": {
+        "refund_days": "3-5 ngày làm việc"
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hoi-tien-hoan-dev",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N378",
+    "synthetic_customer": true,
+    "address": "109 Lạch Tray, Ngô Quyền, Hải Phòng",
+    "dates": {
+      "call_1": "2026-10-16",
+      "call_2": "2026-10-22",
+      "call_3": "2026-10-24"
+    },
+    "choices": {
+      "cust": "N378",
+      "p": "SKU-JK-WND-L-NAVY",
+      "d1": "2026-10-16",
+      "g1": 6,
+      "g2": 2
+    }
+  }
+}

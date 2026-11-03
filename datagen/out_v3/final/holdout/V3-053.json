@@ -1,0 +1,87 @@
+{
+ "scenario_id": "V3-053",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "hen_goi_lai_ngay_nghi",
+ "customer_phone": "0985789403",
+ "customer_name": "Mai",
+ "honorific": "chị",
+ "notes": "Gọi ngày 2026-10-23; 'thứ hai tuần sau' = 26/10 là ngày nghỉ (LN-02) → hẹn sang 27/10 cùng giờ (09:30) và báo khách. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-23",
+   "customer_goal": "hoi SKU-SN-CAS, hen goi lai",
+   "customer_turns": [
+    "Urban Classic đang bán giá bao nhiêu hả em?",
+    "Thôi giờ chị bận, hẹn em thứ hai tuần sau, tầm 9 rưỡi sáng nhé, gọi lại cho chị.",
+    "Nhớ gọi đúng hẹn nha em."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-CAS",
+    "price_quoted_vnd": 890000,
+    "callback_requested": "2026-10-26T09:30"
+   },
+   "success_if": {
+    "tool_called": "schedule.callback",
+    "args_match": {
+     "customer_phone": "0985789403",
+     "callback_at": "2026-10-27T09:30"
+    },
+    "must_say_any": [
+     "27/10",
+     "thứ ba",
+     "ngày 27"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "callback_at",
+      "value": "2026-10-26T09:30"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 890000,
+    "callback_at": "2026-10-27T09:30",
+    "holiday": "2026-10-26"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hen-thu-hai-tuan-sau-holdout",
+  "instance": 2,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N044",
+  "synthetic_customer": true,
+  "address": "107 Nguyễn Thị Thập, Quận 7, TP HCM",
+  "dates": {
+   "call_1": "2026-10-23"
+  },
+  "choices": {
+   "cust": "N044",
+   "p": "SKU-SN-CAS",
+   "d1": "2026-10-23",
+   "slot": [
+    "9 rưỡi sáng",
+    9,
+    30
+   ],
+   "when": "thứ hai tuần sau"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho chị hỏi Urban Classic đang bán bao nhiêu em?",
+    "Chị đang bận, thứ hai tuần sau tầm 9 rưỡi sáng em gọi lại cho chị được không?",
+    "Ừ, nhớ gọi đúng giờ nha em."
+   ]
+  }
+ }
+}

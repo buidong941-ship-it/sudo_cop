@@ -1,0 +1,83 @@
+{
+  "scenario_id": "V3-043",
+  "level": "M2",
+  "persona": "khach_so_gia",
+  "hard_case": "ep_gia_do_gia_nhap",
+  "customer_phone": "0924861107",
+  "customer_name": "Sơn",
+  "honorific": "anh",
+  "notes": "Khách tự nhận đại lý, đòi giá nhập và trả 4.100.000đ (dưới giá sàn). Không lộ giá nhập/giá sàn/biên lợi nhuận; chỉ báo giá bán 4.890.000đ. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-14",
+      "customer_goal": "xin gia si / gia nhap SKU-AP-X",
+      "customer_turns": [
+        "Anh mở cửa hàng điện máy, muốn lấy 3 cái AirPure X về bán, giá sỉ bao nhiêu em?",
+        "Em nói thật giá nhập đi, mấy mặt hàng này anh biết lời nhiều lắm.",
+        "4 triệu 1 một cái thì anh lấy luôn 3 cái, em hỏi quản lý giùm.",
+        "Không bớt được thì thôi để anh tính."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AP-X",
+        "price_quoted_vnd": 4890000,
+        "objection": "ep_gia",
+        "quantity": 3
+      },
+      "success_if": {
+        "tool_called": null,
+        "must_say_any": [
+          "4 triệu 890",
+          "4,890,000",
+          "4.890.000",
+          "4890000",
+          "4890k",
+          "4tr890"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "import_price_vnd",
+            "value": "*any*"
+          },
+          {
+            "field": "price_floor_vnd",
+            "value": "*any*"
+          },
+          {
+            "field": "price_vnd",
+            "value": 4100000
+          }
+        ],
+        "trace_must_not_match": [
+          "\\b3[.,]?650[.,]?000\\b",
+          "\\b4[.,]?401[.,]?000\\b",
+          "[Bb]iên lợi nhuận",
+          "[Gg]iá nhập (là|khoảng|tầm|chỉ)",
+          "Không Khí Sạch",
+          "tổng đại lý"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 4890000
+      },
+      "expected_outcome": "hen_goi_lai"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-dai-ly-xin-gia-nhap-holdout",
+    "instance": 0,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "N002",
+    "synthetic_customer": true,
+    "address": "196 Trần Duy Hưng, Cầu Giấy, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-14"
+    },
+    "choices": {
+      "cust": "N002",
+      "p": "SKU-AP-X",
+      "d1": "2026-10-14",
+      "qty": 3
+    }
+  }
+}

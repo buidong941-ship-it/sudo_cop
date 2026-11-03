@@ -1,0 +1,119 @@
+{
+ "scenario_id": "V3-083",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": null,
+ "customer_phone": "0944645449",
+ "customer_name": "Bích",
+ "honorific": "cô",
+ "notes": "Đổi SKU-SN-RUN1-42-XAM → SKU-SN-RUN1-43-XAM, lần đổi đầu tiên miễn phí (DT-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-19",
+   "customer_goal": "mua SKU-SN-RUN1-42-XAM",
+   "customer_turns": [
+    "Em ơi, lấy RunLite 1 size 42 màu xám cho cô nha.",
+    "Giao tới 20 Nguyễn Văn Linh, Hải Châu, Đà Nẵng, nhận hàng cô trả tiền."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN1",
+    "variant_sku": "SKU-SN-RUN1-42-XAM",
+    "size": 42,
+    "color": "xam",
+    "price_quoted_vnd": 1161000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "20 Nguyễn Văn Linh, Hải Châu, Đà Nẵng"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 3,
+   "customer_turns": [
+    "Cô nhận giày rồi mà hơi chật em ơi, đổi lên size 43 giúp cô được không?",
+    "Đổi lần đầu có tốn phí ship không em?",
+    "Ừ đổi giúp cô nha, vẫn màu xám."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "variant_sku"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised",
+    "color",
+    "address"
+   ],
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "exchange_size",
+     "new_variant_sku": "SKU-SN-RUN1-43-XAM"
+    },
+    "must_say_any": [
+     "miễn phí",
+     "không mất phí",
+     "không tốn phí",
+     "0đ"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "exchange_fee_vnd",
+      "value": 30000
+     },
+     {
+      "field": "exchange_fee_vnd",
+      "value": 20000
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "exchange_fee_vnd": 0,
+    "new_size_in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-size-mien-phi-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N161",
+  "synthetic_customer": true,
+  "address": "20 Nguyễn Văn Linh, Hải Châu, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-19",
+   "call_2": "2026-10-22"
+  },
+  "choices": {
+   "cust": "N161",
+   "p": "SKU-SN-RUN1-42-XAM",
+   "d1": "2026-10-19",
+   "gap": 3
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi lấy cho cô RunLite 1 size 42 màu xám.",
+    "Giao về 20 Nguyễn Văn Linh, Hải Châu, Đà Nẵng, cô trả tiền khi nhận."
+   ],
+   "call_2": [
+    "Cô nhận giày rồi mà hơi chật, đổi lên size 43 giúp cô được không?",
+    "Đổi lần đầu có mất phí ship không em?",
+    "Ok em đổi giúp cô, giữ màu xám nhé."
+   ]
+  }
+ }
+}

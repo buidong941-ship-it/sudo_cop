@@ -1,0 +1,100 @@
+{
+ "scenario_id": "V3-008",
+ "level": "M2",
+ "persona": "khach_da_kenh_fb_hotline",
+ "hard_case": null,
+ "customer_phone": "0994157718",
+ "customer_name": "Tiến",
+ "honorific": "anh",
+ "notes": "Khách không nhắc lại tên sản phẩm ở hotline: agent phải nối kênh Fanpage → hotline qua CRM và nhớ sản phẩm, giá, rào cản. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-23",
+   "channel": "chat_fanpage",
+   "channel_identity": "fb.tiến.352",
+   "customer_goal": "hoi SKU-MB-PUMP1 qua fanpage",
+   "customer_turns": [
+    "Shop ơi cho mình hỏi Spectra S1 với.",
+    "Giá bao nhiêu vậy shop?",
+    "Ok để mình hỏi vợ đã nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-MB-PUMP1",
+    "price_quoted_vnd": 4290000,
+    "blocker": "hoi vợ"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4290000,
+    "in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 2,
+   "channel": "hotline",
+   "customer_turns": [
+    "Em ơi, anh là người nhắn Fanpage hỏi hôm trước á.",
+    "Vợ anh ok rồi, đặt luôn nha em.",
+    "Gửi về 185 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng, trả tiền khi nhận."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "blocker"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "address": "185 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-MB-PUMP1",
+     "price_vnd": 4290000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4290000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-fanpage-roi-hotline-holdout",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C043",
+  "synthetic_customer": false,
+  "address": "185 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-23",
+   "call_2": "2026-10-25"
+  },
+  "choices": {
+   "cust": "C043",
+   "p": "SKU-MB-PUMP1",
+   "d1": "2026-10-23",
+   "gap": 2
+  },
+  "naturalized": {
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_2": [
+    "Alo em, hôm trước anh có nhắn Fanpage hỏi đồ bên em đó.",
+    "Vợ anh đồng ý rồi, em lên đơn luôn nhé.",
+    "Giao về 185 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng, trả tiền khi nhận."
+   ]
+  }
+ }
+}

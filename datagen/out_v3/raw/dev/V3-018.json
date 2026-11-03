@@ -1,0 +1,88 @@
+{
+  "scenario_id": "V3-018",
+  "level": "M2",
+  "persona": "khach_da_kenh_fb_hotline",
+  "hard_case": null,
+  "customer_phone": "0930976582",
+  "customer_name": "Cường",
+  "honorific": "anh",
+  "notes": "Hotline → Zalo: size/màu đã chốt qua điện thoại phải dùng lại trên Zalo. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-23",
+      "customer_goal": "hoi SKU-SN-RUN2-38-TRANG qua hotline",
+      "customer_turns": [
+        "Em ơi RunLite 2 Pro size 38 màu trắng còn không?",
+        "Giá bao nhiêu em?",
+        "Để anh nhắn Zalo chốt sau nhé."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN2",
+        "variant_sku": "SKU-SN-RUN2-38-TRANG",
+        "price_quoted_vnd": 1521000,
+        "size": 38,
+        "color": "trang"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1521000,
+        "in_stock": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 2,
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_cường76",
+      "customer_turns": [
+        "Shop ơi mình gọi hotline hỏi đôi/cái hôm qua đó",
+        "Chốt đúng size màu đó nha, giao 21 Nguyễn Văn Cừ, Long Biên, Hà Nội, COD"
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "variant_sku",
+        "price_quoted_vnd"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "size",
+        "color"
+      ],
+      "facts_established": {
+        "address": "21 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN2-38-TRANG",
+          "price_vnd": 1521000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1521000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hotline-roi-zalo-dev",
+    "instance": 2,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "C039",
+    "synthetic_customer": false,
+    "address": "21 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-23",
+      "call_2": "2026-10-25"
+    },
+    "choices": {
+      "cust": "C039",
+      "p": "SKU-SN-RUN2-38-TRANG",
+      "d1": "2026-10-23",
+      "gap": 2
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+ "scenario_id": "V3-055",
+ "level": "M2",
+ "persona": "khach_mua_nhieu_mon",
+ "hard_case": "nhieu_mon_vuot_cod_ngan_sach",
+ "customer_phone": "0944834560",
+ "customer_name": "Phương",
+ "honorific": "chị",
+ "notes": "Cuộc gọi dài (8 lượt khách, 16 lượt cả hai phía), 4 món, tổng 15.870.000đ > ngân sách 13.000.000đ và > 10 triệu → không COD (VC-03). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-17",
+   "customer_goal": "mua 4 mon cho nha moi",
+   "customer_turns": [
+    "Chào em, nhà chị vừa dọn về, đang cần mua sắm vài món đồ gia dụng.",
+    "Đầu tiên là máy lọc không khí nha, AirPure Y giá bao nhiêu em?",
+    "Lấy thêm máy lọc nước RO Karofi 9 lõi, cái này bao nhiêu em?",
+    "Thêm Philips 6.2L nữa, với một bộ màng lọc thay thế cho AirPure Y luôn nhé.",
+    "Tổng hết bao nhiêu tiền vậy em? Chị dự tính chỉ tầm 13 triệu thôi.",
+    "Lố vậy hả… thôi kệ, lấy đủ bốn món luôn. Giao về 70 Nguyễn Văn Linh, Hải Châu, Đà Nẵng nha em.",
+    "Nhận hàng rồi chị trả tiền mặt được không?",
+    "Thế thì chị chuyển khoản trước, em lên đơn giúp chị."
+   ],
+   "facts_established": {
+    "basket": [
+     "SKU-AP-Y",
+     "SKU-WF-RO9",
+     "SKU-AF-6L",
+     "SKU-AP-FLT-X"
+    ],
+    "budget_vnd": 13000000,
+    "address": "70 Nguyễn Văn Linh, Hải Châu, Đà Nẵng",
+    "payment": "bank"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-AP-Y",
+     "price_vnd": 5200000,
+     "payment": "bank"
+    },
+    "also_ordered": [
+     "SKU-AP-Y",
+     "SKU-WF-RO9",
+     "SKU-AF-6L",
+     "SKU-AP-FLT-X"
+    ],
+    "total_match_vnd": 15870000,
+    "must_say_any": [
+     "10 triệu",
+     "10.000.000",
+     "mười triệu",
+     "10tr"
+    ]
+   },
+   "ground_truth_facts": {
+    "total_vnd": 15870000,
+    "cod_allowed": false,
+    "cod_limit_vnd": 10000000
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-bon-mon-nha-moi-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N049",
+  "synthetic_customer": true,
+  "address": "70 Nguyễn Văn Linh, Hải Châu, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-17"
+  },
+  "choices": {
+   "cust": "N049",
+   "pa": "SKU-AP-Y",
+   "pw": "SKU-WF-RO9",
+   "pf": "SKU-AF-6L",
+   "d1": "2026-10-17"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Chào em, nhà chị mới chuyển về, chị cần sắm mấy món gia dụng.",
+    "Trước tiên là máy lọc không khí, AirPure Y giá sao em?",
+    "Thêm một máy lọc nước RO Karofi 9 lõi nữa, cái đó bao nhiêu?",
+    "Rồi lấy thêm Philips 6.2L, với một bộ màng lọc thay thế cho AirPure Y luôn.",
+    "Tổng cộng hết bao nhiêu em? Chị tính sơ chỉ khoảng 13 triệu thôi.",
+    "Vượt vậy à… thôi kệ, lấy đủ bốn món. Giao về 70 Nguyễn Văn Linh, Hải Châu, Đà Nẵng nhé.",
+    "Chị trả tiền mặt lúc nhận được không em?",
+    "Vậy chị chuyển khoản trước, em lên đơn đi."
+   ]
+  }
+ }
+}

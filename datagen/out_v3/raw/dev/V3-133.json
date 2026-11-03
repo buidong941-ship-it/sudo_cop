@@ -1,0 +1,81 @@
+{
+  "scenario_id": "V3-133",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": null,
+  "customer_phone": "0975472607",
+  "customer_name": "Dũng",
+  "honorific": "anh",
+  "notes": "restock_date (2026-10-21) phải được nhớ; khách không nhắc lại tên sản phẩm ở cuộc 2. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-19",
+      "customer_goal": "hoi SKU-AP-PRO dang het",
+      "customer_turns": [
+        "Cho anh hỏi AirPure Pro còn hàng không em?",
+        "Bao giờ có hàng lại vậy?",
+        "Ừ có hàng thì anh lấy, để anh gọi lại."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-AP-PRO",
+        "restock_date": "2026-10-21"
+      },
+      "ground_truth_facts": {
+        "in_stock": false,
+        "restock_date": "2026-10-21"
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 3,
+      "customer_turns": [
+        "Hàng về chưa em? Anh hỏi hôm trước đó.",
+        "Về rồi thì lên đơn giao 193 Hùng Vương, TP Việt Trì, Phú Thọ, COD nha."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "restock_date"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "address": "193 Hùng Vương, TP Việt Trì, Phú Thọ",
+        "payment": "COD",
+        "price_quoted_vnd": 7690000
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-AP-PRO",
+          "price_vnd": 7690000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 7690000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-hang-ve-chua-dev",
+    "instance": 4,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N362",
+    "synthetic_customer": true,
+    "address": "193 Hùng Vương, TP Việt Trì, Phú Thọ",
+    "dates": {
+      "call_1": "2026-10-19",
+      "call_2": "2026-10-22"
+    },
+    "choices": {
+      "cust": "N362",
+      "p": "SKU-AP-PRO",
+      "d1": "2026-10-19",
+      "gap": 3
+    }
+  }
+}

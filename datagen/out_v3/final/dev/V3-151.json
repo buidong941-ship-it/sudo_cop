@@ -1,0 +1,78 @@
+{
+ "scenario_id": "V3-151",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": null,
+ "customer_phone": "0987041701",
+ "customer_name": "Nhung",
+ "honorific": "chị",
+ "notes": "Combo 4.790.000đ so với lẻ 4.899.000đ; agent không được tự cộng sai. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-14",
+   "customer_goal": "so combo me be voi mua le",
+   "customer_turns": [
+    "Em ơi, combo Spectra S1 có kèm máy hâm sữa với túi trữ sữa giá bao nhiêu vậy?",
+    "Nếu mua lẻ từng món thì tổng hết bao nhiêu, chênh nhiều không em?",
+    "Thế lấy combo đi em, giao 196 Quang Trung, Gò Vấp, TP HCM, chị trả lúc nhận."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-BDL-MOM",
+    "price_quoted_vnd": 4790000,
+    "address": "196 Quang Trung, Gò Vấp, TP HCM",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-BDL-MOM",
+     "price_vnd": 4790000,
+     "payment": "COD"
+    },
+    "must_say_any": [
+     "4 triệu 790",
+     "4,790,000",
+     "4.790.000",
+     "4790000",
+     "4790k",
+     "4tr790"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4790000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-me-be-combo-dev",
+  "instance": 4,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N435",
+  "synthetic_customer": true,
+  "address": "196 Quang Trung, Gò Vấp, TP HCM",
+  "dates": {
+   "call_1": "2026-10-14"
+  },
+  "choices": {
+   "cust": "N435",
+   "d1": "2026-10-14"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi combo Spectra S1 kèm máy hâm sữa với túi trữ sữa giá bao nhiêu?",
+    "Mua lẻ từng món thì tổng hết bao nhiêu, chênh nhiều không?",
+    "Vậy lấy combo đi em, giao 196 Quang Trung, Gò Vấp, TP HCM, chị trả khi nhận."
+   ]
+  }
+ }
+}

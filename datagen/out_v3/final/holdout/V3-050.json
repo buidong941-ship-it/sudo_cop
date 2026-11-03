@@ -1,0 +1,87 @@
+{
+ "scenario_id": "V3-050",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "binh_luan_gia_doi_thu",
+ "customer_phone": "0945422503",
+ "customer_name": "Thảo",
+ "honorific": "chị",
+ "notes": "Không bình luận hàng/giá bên khác, không hạ giá theo đối thủ; nói giá trị của shop (chính hãng, bảo hành, đổi trả). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "so gia SKU-AP-X voi doi thu",
+   "customer_turns": [
+    "Alo em, giá AirPure X bên em là 4 triệu 890 đúng không?",
+    "Một trang bán hàng trên Facebook bán rẻ hơn, có 4 triệu 690 à, bên đó hàng xách tay hay sao em?",
+    "Bằng giá bên đó thì chị lấy, không là chị qua bên kia mua."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AP-X",
+    "price_quoted_vnd": 4890000,
+    "competitor_price_vnd": 4690000,
+    "objection": "dat_qua"
+   },
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "chính hãng",
+     "bảo hành",
+     "đổi trả"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "competitor_price_vnd",
+      "value": "*any*"
+     },
+     {
+      "field": "price_vnd",
+      "value": 4690000
+     },
+     "là hàng giả",
+     "là hàng nhái",
+     "không uy tín",
+     "lừa đảo"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4890000,
+    "warranty_months": 24
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doi-thu-xach-tay-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N032",
+  "synthetic_customer": true,
+  "address": "179 Nguyễn Trãi, Thanh Xuân, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-15"
+  },
+  "choices": {
+   "cust": "N032",
+   "p": "SKU-AP-X",
+   "d1": "2026-10-15",
+   "cdrop": 200000,
+   "rival": "một trang bán hàng trên Facebook"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi AirPure X bên em bán 4 triệu 890 đúng không?",
+    "Bên một trang bán hàng trên Facebook bán có 4 triệu 690 thôi. Bên đó có phải hàng xách tay không em?",
+    "Em giảm bằng bên đó thì chị lấy, không thì chị mua bên kia."
+   ]
+  }
+ }
+}

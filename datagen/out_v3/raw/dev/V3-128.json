@@ -1,0 +1,73 @@
+{
+  "scenario_id": "V3-128",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": "doc_so_tien_sdt",
+  "customer_phone": "0911031261",
+  "customer_name": "Yến",
+  "honorific": "chị",
+  "notes": "Ngân sách đọc kiểu '4 triệu rưỡi' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-16",
+      "input_mode": "asr_transcript",
+      "customer_goal": "mua SKU-MB-PUMP1 qua hotline",
+      "customer_turns": [
+        "Em ơi chị tìm Spectra S1, ngân sách tầm 4 triệu rưỡi có được không?",
+        "Ừ vậy lấy một cái, giao về 118 Minh Khai, Hai Bà Trưng, Hà Nội.",
+        "Số người nhận là 0949192165, trả tiền khi nhận nhé."
+      ],
+      "customer_turns_asr": [
+        "em ơi chị tìm spéc tra smột ngân sách tầm bốn triệu rưỡi có được không",
+        "ừ vậy lấy một cái giao về một trăm mười tám minh khai hai bà trưng hà nội",
+        "số người nhận là không chín bốn chín một chín hai một sáu năm trả tiền khi nhận nhé"
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-PUMP1",
+        "price_quoted_vnd": 4290000,
+        "budget_vnd": 4500000,
+        "address": "118 Minh Khai, Hai Bà Trưng, Hà Nội",
+        "receiver_phone": "0949192165",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-PUMP1",
+          "price_vnd": 4290000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "4 triệu 290",
+          "4,290,000",
+          "4.290.000",
+          "4290000",
+          "4290k",
+          "4tr290"
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 4290000,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-doc-so-hotline-dev",
+    "instance": 5,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N341",
+    "synthetic_customer": true,
+    "address": "118 Minh Khai, Hai Bà Trưng, Hà Nội",
+    "dates": {
+      "call_1": "2026-10-16"
+    },
+    "choices": {
+      "cust": "N341",
+      "p": "SKU-MB-PUMP1",
+      "d1": "2026-10-16"
+    }
+  }
+}

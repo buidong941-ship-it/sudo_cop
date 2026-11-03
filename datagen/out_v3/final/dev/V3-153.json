@@ -1,0 +1,100 @@
+{
+ "scenario_id": "V3-153",
+ "level": "M2",
+ "persona": "khach_hoi_nhieu_khong_mua",
+ "hard_case": null,
+ "customer_phone": "0985040637",
+ "customer_name": "Liên",
+ "honorific": "cô",
+ "notes": "Khách hỏi nhiều không mua; 'mai 9 giờ' = 2026-10-19T09:00 (ITN thời gian tương đối). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-16",
+   "customer_goal": "so sanh 3 mau",
+   "customer_turns": [
+    "Lock&Lock 4L với Philips 6.2L khác nhau ở chỗ nào vậy em?",
+    "Thế còn Xiaomi 4.5L thì sao em?",
+    "Để cô coi thêm review đã nha."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-AF-4L",
+    "price_quoted_vnd": 1890000,
+    "blocker": "so sanh mau khac"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 1890000
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 2,
+   "customer_turns": [
+    "Cô vẫn còn phân vân mấy mẫu hôm trước em ạ.",
+    "Mai 9 giờ em gọi lại cho cô nha, giờ cô đang bận."
+   ],
+   "must_carry_over": [
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": "schedule.callback",
+    "args_match": {
+     "customer_phone": "0985040637",
+     "callback_at": "2026-10-19T09:00"
+    }
+   },
+   "ground_truth_facts": {
+    "callback_at": "2026-10-19T09:00"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-so-ba-mau-hen-lai-dev",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N444",
+  "synthetic_customer": true,
+  "address": "184 Ngô Quyền, Sơn Trà, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-16",
+   "call_2": "2026-10-18"
+  },
+  "choices": {
+   "cust": "N444",
+   "d1": "2026-10-16",
+   "gap": 2,
+   "hour": 9,
+   "trio": [
+    "SKU-AF-4L",
+    "SKU-AF-6L",
+    "SKU-AF-XM"
+   ]
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Lock&Lock 4L với Philips 6.2L khác nhau chỗ nào em?",
+    "Còn Xiaomi 4.5L thì sao?",
+    "Để cô xem thêm review đã."
+   ],
+   "call_2": [
+    "Cô vẫn đang phân vân mấy mẫu hôm trước.",
+    "Mai 9 giờ em gọi lại cho cô nhé, giờ cô bận."
+   ]
+  }
+ }
+}

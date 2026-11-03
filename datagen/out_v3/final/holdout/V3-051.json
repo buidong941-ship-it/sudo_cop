@@ -1,0 +1,87 @@
+{
+ "scenario_id": "V3-051",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "hen_goi_lai_ngay_nghi",
+ "customer_phone": "0949724062",
+ "customer_name": "Huy",
+ "honorific": "anh",
+ "notes": "Gọi ngày 2026-10-20; 'thứ hai tuần sau' = 26/10 là ngày nghỉ (LN-02) → hẹn sang 27/10 cùng giờ (16:00) và báo khách. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-20",
+   "customer_goal": "hoi SKU-WF-RO9, hen goi lai",
+   "customer_turns": [
+    "Em ơi, RO Karofi 9 lõi giờ bán bao nhiêu em?",
+    "Anh đang bận chút, thứ hai tuần sau khoảng 4 giờ chiều em gọi lại cho anh nha?",
+    "Ờ nhớ gọi đúng giờ giùm anh nghen."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000,
+    "callback_requested": "2026-10-26T16:00"
+   },
+   "success_if": {
+    "tool_called": "schedule.callback",
+    "args_match": {
+     "customer_phone": "0949724062",
+     "callback_at": "2026-10-27T16:00"
+    },
+    "must_say_any": [
+     "27/10",
+     "thứ ba",
+     "ngày 27"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "callback_at",
+      "value": "2026-10-26T16:00"
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "callback_at": "2026-10-27T16:00",
+    "holiday": "2026-10-26"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hen-thu-hai-tuan-sau-holdout",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N036",
+  "synthetic_customer": true,
+  "address": "126 Hùng Vương, Tam Kỳ, Quảng Nam",
+  "dates": {
+   "call_1": "2026-10-20"
+  },
+  "choices": {
+   "cust": "N036",
+   "p": "SKU-WF-RO9",
+   "d1": "2026-10-20",
+   "slot": [
+    "4 giờ chiều",
+    16,
+    0
+   ],
+   "when": "thứ hai tuần sau"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho anh hỏi RO Karofi 9 lõi đang bán bao nhiêu em?",
+    "Anh đang bận, thứ hai tuần sau tầm 4 giờ chiều em gọi lại cho anh được không?",
+    "Ừ, nhớ gọi đúng giờ nha em."
+   ]
+  }
+ }
+}

@@ -1,0 +1,132 @@
+{
+  "scenario_id": "V3-005",
+  "level": "M2",
+  "persona": "khach_da_kenh_mau_thuan",
+  "hard_case": "3_kenh_bao_gia_lech",
+  "customer_phone": "0990853801",
+  "customer_name": "Nhung",
+  "honorific": "chị",
+  "notes": "Zalo (2026-10-22) báo 1.161.000đ theo RUN-10; Fanpage (2026-10-30) báo 1.290.000đ vì RUN-10 hết 2026-10-25. Hotline phải hợp nhất và giải thích. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-22",
+      "channel": "zalo_oa",
+      "channel_identity": "zalo_nhung30",
+      "customer_goal": "hoi gia qua zalo",
+      "customer_turns": [
+        "Chào shop, RunLite 1 size 38 màu trắng giá nhiêu vậy?",
+        "Đang có giảm giá phải không shop?",
+        "Ok mình suy nghĩ thêm nha."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-SN-RUN1",
+        "variant_sku": "SKU-SN-RUN1-38-TRANG",
+        "price_quoted_vnd": 1161000,
+        "promo_code": "RUN-10",
+        "channel": "zalo"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1161000
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 8,
+      "channel": "chat_fanpage",
+      "channel_identity": "fb.nhung.733",
+      "customer_goal": "hoi lai gia qua fanpage",
+      "customer_turns": [
+        "Shop ơi, RunLite 1 giờ giá sao rồi?",
+        "Ủa bên Zalo hôm trước báo 1161k mà?",
+        "Ừ để mình tính."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "promo_code"
+      ],
+      "must_not_ask": [
+        "product_advised"
+      ],
+      "facts_established": {
+        "price_quoted_vnd": 1290000,
+        "channel": "fanpage"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1290000,
+        "promo_RUN-10_active": false
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_3": {
+      "days_later": 2,
+      "channel": "hotline",
+      "customer_turns": [
+        "Em ơi, chị hỏi trên Zalo thì 1161k, lên Facebook lại 1290k, giờ chốt giá nào?",
+        "Lần sau có chương trình thì báo chị nhé. Giờ chị lấy theo giá hiện tại.",
+        "Giao về 88 Lạch Tray, Ngô Quyền, Hải Phòng, trả tiền mặt."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "promo_code"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "price_quoted_vnd"
+      ],
+      "facts_established": {
+        "address": "88 Lạch Tray, Ngô Quyền, Hải Phòng",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-SN-RUN1-38-TRANG",
+          "price_vnd": 1290000,
+          "payment": "COD"
+        },
+        "must_say_any": [
+          "hết hạn",
+          "kết thúc",
+          "đã hết",
+          "hết chương trình",
+          "hết khuyến mãi"
+        ],
+        "forbidden_claims": [
+          {
+            "field": "price_vnd",
+            "value": 1161000
+          }
+        ]
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1290000,
+        "promo_RUN-10_active": false,
+        "in_stock": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-zalo-fanpage-hotline-holdout",
+    "instance": 1,
+    "seed": 20261030,
+    "split": "holdout",
+    "customer_id": "C025",
+    "synthetic_customer": false,
+    "address": "88 Lạch Tray, Ngô Quyền, Hải Phòng",
+    "dates": {
+      "call_1": "2026-10-22",
+      "call_2": "2026-10-30",
+      "call_3": "2026-11-01"
+    },
+    "choices": {
+      "cust": "C025",
+      "p": "SKU-SN-RUN1-38-TRANG",
+      "d1": "2026-10-22",
+      "g1": 8,
+      "g2": 2
+    }
+  }
+}

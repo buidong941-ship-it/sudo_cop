@@ -1,0 +1,143 @@
+{
+ "scenario_id": "V3-135",
+ "level": "M2",
+ "persona": "khach_da_mua_doi_size",
+ "hard_case": null,
+ "customer_phone": "0949275645",
+ "customer_name": "Hương",
+ "honorific": "chị",
+ "notes": "refund_vnd = 1.161.000đ phải nhớ từ phiên trả hàng để trả lời ở phiên 3. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-19",
+   "customer_goal": "mua SKU-SN-RUN1-39-TRANG",
+   "customer_turns": [
+    "Em ơi lấy cho chị RunLite 1 size 39 màu trắng nha.",
+    "Giao 171 Phan Xích Long, Phú Nhuận, TP HCM, COD."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN1",
+    "variant_sku": "SKU-SN-RUN1-39-TRANG",
+    "price_quoted_vnd": 1161000,
+    "order_id": "OD600001",
+    "payment": "COD",
+    "address": "171 Phan Xích Long, Phú Nhuận, TP HCM"
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_2": {
+   "days_later": 5,
+   "customer_turns": [
+    "Em ơi, chị nhận hàng rồi mà không giống hình, chị gửi trả lại nha.",
+    "Hoàn tiền mất bao lâu em?"
+   ],
+   "must_carry_over": [
+    "order_id"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "facts_established": {
+    "refund_vnd": 1161000
+   },
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "return"
+    },
+    "must_say_any": [
+     "3-5 ngày",
+     "3 đến 5 ngày",
+     "3–5 ngày",
+     "ba đến năm ngày"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_vnd": 1161000,
+    "refund_days": "3-5 ngày làm việc"
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_3": {
+   "days_later": 3,
+   "customer_turns": [
+    "Em ơi, tiền hoàn của chị là bao nhiêu nhỉ, chị quên mất rồi?",
+    "Ừ cảm ơn em nha."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "refund_vnd"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised"
+   ],
+   "success_if": {
+    "tool_called": null,
+    "must_say_any": [
+     "1 triệu 161",
+     "1,161,000",
+     "1.161.000",
+     "1161000",
+     "1161k",
+     "1tr161"
+    ]
+   },
+   "ground_truth_facts": {
+    "refund_days": "3-5 ngày làm việc"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-hoi-tien-hoan-dev",
+  "instance": 0,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N372",
+  "synthetic_customer": true,
+  "address": "171 Phan Xích Long, Phú Nhuận, TP HCM",
+  "dates": {
+   "call_1": "2026-10-19",
+   "call_2": "2026-10-24",
+   "call_3": "2026-10-27"
+  },
+  "choices": {
+   "cust": "N372",
+   "p": "SKU-SN-RUN1-39-TRANG",
+   "d1": "2026-10-19",
+   "g1": 5,
+   "g2": 3
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ],
+   "call_3": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Lấy cho chị RunLite 1 size 39 màu trắng em nhé.",
+    "Giao về 171 Phan Xích Long, Phú Nhuận, TP HCM, COD."
+   ],
+   "call_2": [
+    "Em ơi hàng chị nhận rồi nhưng không như hình, chị trả lại nhé.",
+    "Hoàn tiền bao lâu vậy em?"
+   ],
+   "call_3": [
+    "Tiền hoàn của chị là bao nhiêu vậy em, chị quên rồi?",
+    "Ừ cảm ơn em."
+   ]
+  }
+ }
+}

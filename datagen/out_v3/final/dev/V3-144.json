@@ -1,0 +1,110 @@
+{
+ "scenario_id": "V3-144",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": null,
+ "customer_phone": "0941543058",
+ "customer_name": "Trang",
+ "honorific": "chị",
+ "notes": "Mẹ & bé: tuổi bé và phản đối giá ở cuộc 1 phải được dùng ở cuộc 2 (không hỏi lại tuổi bé). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-15",
+   "customer_goal": "hoi SKU-MB-PUMP1 cho be",
+   "customer_turns": [
+    "Alo em, chị đang tìm Spectra S1 cho bé, bé nhà chị 1 tuổi.",
+    "Giá 4 triệu 290 hơi mắc so với chị tính.",
+    "Chị hỏi chồng chị rồi gọi lại em nhé."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-MB-PUMP1",
+    "price_quoted_vnd": 4290000,
+    "baby_age": "1 tuổi",
+    "objection": "dat_qua",
+    "blocker": "can hoi chong"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4290000,
+    "freeship": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 4,
+   "customer_turns": [
+    "Alo em, chồng chị kêu mua đi, có quà gì kèm không em?",
+    "Rồi lên đơn nha, giao 27 Phan Xích Long, Phú Nhuận, TP HCM, chị trả khi nhận hàng."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "baby_age",
+    "objection"
+   ],
+   "must_not_ask": [
+    "product_advised",
+    "baby_age"
+   ],
+   "facts_established": {
+    "address": "27 Phan Xích Long, Phú Nhuận, TP HCM",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-MB-PUMP1",
+     "price_vnd": 4290000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 4290000,
+    "in_stock": true,
+    "freeship": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-me-be-tuoi-be-phan-doi-dev",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N408",
+  "synthetic_customer": true,
+  "address": "27 Phan Xích Long, Phú Nhuận, TP HCM",
+  "dates": {
+   "call_1": "2026-10-15",
+   "call_2": "2026-10-19"
+  },
+  "choices": {
+   "cust": "N408",
+   "p": "SKU-MB-PUMP1",
+   "d1": "2026-10-15",
+   "gap": 4,
+   "age": "1 tuổi"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Bé nhà chị 1 tuổi, chị đang xem Spectra S1.",
+    "Giá 4 triệu 290 hơi cao so với chị tính.",
+    "Để chị hỏi chồng rồi gọi lại em nha."
+   ],
+   "call_2": [
+    "Chồng chị bảo mua đi, mà có quà hay ưu đãi gì không em?",
+    "Ok lên đơn cho chị, giao 27 Phan Xích Long, Phú Nhuận, TP HCM, trả khi nhận."
+   ]
+  }
+ }
+}

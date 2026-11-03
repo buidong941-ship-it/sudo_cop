@@ -1,0 +1,88 @@
+{
+  "scenario_id": "V3-146",
+  "level": "M2",
+  "persona": "khach_do_du_hoi_nguoi_nha",
+  "hard_case": null,
+  "customer_phone": "0979533930",
+  "customer_name": "Hương",
+  "honorific": "chị",
+  "notes": "Mẹ & bé: tuổi bé và phản đối giá ở cuộc 1 phải được dùng ở cuộc 2 (không hỏi lại tuổi bé). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+  "calls": {
+    "call_1": {
+      "call_date": "2026-10-20",
+      "customer_goal": "hoi SKU-MB-STER cho be",
+      "customer_turns": [
+        "Bé nhà chị 8 tháng, chị đang xem Moaz Bebe.",
+        "Giá 1 triệu 890 hơi cao so với chị tính.",
+        "Để chị hỏi chồng rồi gọi lại em nha."
+      ],
+      "facts_established": {
+        "product_advised": "SKU-MB-STER",
+        "price_quoted_vnd": 1890000,
+        "baby_age": "8 tháng",
+        "objection": "dat_qua",
+        "blocker": "can hoi chong"
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "freeship": true
+      },
+      "expected_outcome": "hen_goi_lai"
+    },
+    "call_2": {
+      "days_later": 1,
+      "customer_turns": [
+        "Chồng chị bảo mua đi, mà có quà hay ưu đãi gì không em?",
+        "Ok lên đơn cho chị, giao 187 Lũy Bán Bích, Tân Phú, TP HCM, trả khi nhận."
+      ],
+      "must_carry_over": [
+        "product_advised",
+        "price_quoted_vnd",
+        "baby_age",
+        "objection"
+      ],
+      "must_not_ask": [
+        "product_advised",
+        "baby_age"
+      ],
+      "facts_established": {
+        "address": "187 Lũy Bán Bích, Tân Phú, TP HCM",
+        "payment": "COD"
+      },
+      "success_if": {
+        "tool_called": "order.create",
+        "args_match": {
+          "sku": "SKU-MB-STER",
+          "price_vnd": 1890000,
+          "payment": "COD"
+        }
+      },
+      "ground_truth_facts": {
+        "price_vnd": 1890000,
+        "in_stock": true,
+        "freeship": true
+      },
+      "expected_outcome": "chot_don"
+    }
+  },
+  "_meta": {
+    "template_id": "V3-me-be-tuoi-be-phan-doi-dev",
+    "instance": 5,
+    "seed": 20261030,
+    "split": "dev",
+    "customer_id": "N414",
+    "synthetic_customer": true,
+    "address": "187 Lũy Bán Bích, Tân Phú, TP HCM",
+    "dates": {
+      "call_1": "2026-10-20",
+      "call_2": "2026-10-21"
+    },
+    "choices": {
+      "cust": "N414",
+      "p": "SKU-MB-STER",
+      "d1": "2026-10-20",
+      "gap": 1,
+      "age": "8 tháng"
+    }
+  }
+}

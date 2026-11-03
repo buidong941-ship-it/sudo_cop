@@ -1,0 +1,75 @@
+{
+ "scenario_id": "V3-124",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "doc_so_tien_sdt",
+ "customer_phone": "0912687801",
+ "customer_name": "Nhung",
+ "honorific": "chị",
+ "notes": "Ngân sách đọc kiểu '3 triệu rưỡi' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-21",
+   "input_mode": "asr_transcript",
+   "customer_goal": "mua SKU-WF-UF qua hotline",
+   "customer_turns": [
+    "Em ơi chị tìm UF Sunhouse, ngân sách tầm 3 triệu rưỡi có được không?",
+    "Ừ vậy lấy một cái, giao về 169 Võ Văn Ngân, Thủ Đức, TP HCM.",
+    "Số người nhận là 0941571016, trả tiền khi nhận nhé."
+   ],
+   "customer_turns_asr": [
+    "em ơi chị tìm u ép san hao ngân sách tầm ba triệu rưỡi có được không",
+    "ừ vậy lấy một cái giao về một trăm sáu mươi chín võ văn ngân thủ đức tp hcm",
+    "số người nhận là không chín bốn một năm bảy một không một sáu trả tiền khi nhận nhé"
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-UF",
+    "price_quoted_vnd": 3290000,
+    "budget_vnd": 3500000,
+    "address": "169 Võ Văn Ngân, Thủ Đức, TP HCM",
+    "receiver_phone": "0941571016",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-WF-UF",
+     "price_vnd": 3290000,
+     "payment": "COD"
+    },
+    "must_say_any": [
+     "3 triệu 290",
+     "3,290,000",
+     "3.290.000",
+     "3290000",
+     "3290k",
+     "3tr290"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 3290000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doc-so-hotline-dev",
+  "instance": 1,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N326",
+  "synthetic_customer": true,
+  "address": "169 Võ Văn Ngân, Thủ Đức, TP HCM",
+  "dates": {
+   "call_1": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N326",
+   "p": "SKU-WF-UF",
+   "d1": "2026-10-21"
+  },
+  "naturalized": {},
+  "template_turns": {}
+ }
+}

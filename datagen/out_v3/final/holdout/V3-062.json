@@ -1,0 +1,150 @@
+{
+ "scenario_id": "V3-062",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "3_phien_thong_tin_thay_doi",
+ "customer_phone": "0903470131",
+ "customer_name": "Minh",
+ "honorific": "anh",
+ "notes": "Địa chỉ đổi ở phiên 3 khi đơn chưa giao (dự kiến 2026-10-22): phải cập nhật đơn và bộ nhớ, địa chỉ cũ bị thay thế. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-19",
+   "customer_goal": "hoi SKU-WF-RO9",
+   "customer_turns": [
+    "Alo, anh hỏi giá RO Karofi 9 lõi với em.",
+    "Địa chỉ nhà anh là 164 Nguyễn Văn Cừ, Long Biên, Hà Nội, giao mấy ngày tới vậy?",
+    "Thôi để anh bàn với nhà rồi gọi lại."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000,
+    "address": "164 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+    "blocker": "ban voi nha"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "in_stock": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 1,
+   "customer_turns": [
+    "Alo em, nhà anh ưng rồi, đặt RO Karofi 9 lõi hôm trước cho anh.",
+    "Giao đúng địa chỉ cũ, khi nào nhận anh trả tiền."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "address"
+   ],
+   "must_not_ask": [
+    "product_advised",
+    "address"
+   ],
+   "facts_established": {
+    "order_id": "OD600001",
+    "payment": "COD",
+    "product_advised": "SKU-WF-RO9"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-WF-RO9",
+     "price_vnd": 5990000,
+     "payment": "COD"
+    }
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  },
+  "call_3": {
+   "days_later": 1,
+   "customer_turns": [
+    "Em ơi cái đơn RO Karofi 9 lõi của anh giao chưa?",
+    "Anh mới đổi chỗ ở, em sửa địa chỉ giao thành 17 Phạm Ngọc Thạch, Đống Đa, Hà Nội giúp anh nhé."
+   ],
+   "must_carry_over": [
+    "order_id",
+    "product_advised"
+   ],
+   "must_not_ask": [
+    "order_id",
+    "product_advised",
+    "payment"
+   ],
+   "facts_established": {
+    "address": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội"
+   },
+   "success_if": {
+    "tool_called": "order.update",
+    "args_match": {
+     "order_id": "OD600001",
+     "action": "update_address"
+    },
+    "max_agent_questions": 1
+   },
+   "memory_expectation": {
+    "address": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội",
+    "superseded": "164 Nguyễn Văn Cừ, Long Biên, Hà Nội"
+   },
+   "expected_outcome": "hen_goi_lai"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-ba-phien-doi-dia-chi-don-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "N079",
+  "synthetic_customer": true,
+  "address": "164 Nguyễn Văn Cừ, Long Biên, Hà Nội",
+  "dates": {
+   "call_1": "2026-10-19",
+   "call_2": "2026-10-20",
+   "call_3": "2026-10-21"
+  },
+  "choices": {
+   "cust": "N079",
+   "p": "SKU-WF-RO9",
+   "d1": "2026-10-19",
+   "g1": 1,
+   "g2": 1,
+   "addr_b": "17 Phạm Ngọc Thạch, Đống Đa, Hà Nội"
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true
+   ],
+   "call_3": [
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Cho anh hỏi RO Karofi 9 lõi giá bao nhiêu em?",
+    "Nhà anh ở 164 Nguyễn Văn Cừ, Long Biên, Hà Nội, giao mất mấy ngày?",
+    "Để anh bàn với nhà đã."
+   ],
+   "call_2": [
+    "Nhà anh đồng ý rồi, lên đơn RO Karofi 9 lõi hôm trước nhé em.",
+    "Giao về địa chỉ hôm trước, trả tiền khi nhận."
+   ],
+   "call_3": [
+    "Em ơi đơn RO Karofi 9 lõi của anh giao chưa em?",
+    "Anh mới chuyển chỗ ở, em đổi giao về 17 Phạm Ngọc Thạch, Đống Đa, Hà Nội giúp anh nhé."
+   ]
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "scenario_id": "V3-126",
+ "level": "M2",
+ "persona": "khach_do_du_hoi_nguoi_nha",
+ "hard_case": "doc_so_tien_sdt",
+ "customer_phone": "0904406677",
+ "customer_name": "Minh",
+ "honorific": "anh",
+ "notes": "Ngân sách đọc kiểu '6 triệu' và SĐT người nhận đọc từng số trong transcript: kiểm ITN số tiền và SĐT (Entity Accuracy). Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-17",
+   "input_mode": "asr_transcript",
+   "customer_goal": "mua SKU-WF-RO9 qua hotline",
+   "customer_turns": [
+    "Em ơi anh tìm RO Karofi 9 lõi, ngân sách tầm 6 triệu có được không?",
+    "Ừ vậy lấy một cái, giao về 51 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng.",
+    "Số người nhận là 0922209430, trả tiền khi nhận nhé."
+   ],
+   "customer_turns_asr": [
+    "em ơi anh tìm rô ca rô phi chín lõi ngân sách tầm sáu triệu có được không",
+    "ừ vậy lấy một cái giao về năm mươi mốt tôn đức thắng liên chiểu đà nẵng",
+    "số người nhận là không chín hai hai hai không chín bốn ba không trả tiền khi nhận nhé"
+   ],
+   "facts_established": {
+    "product_advised": "SKU-WF-RO9",
+    "price_quoted_vnd": 5990000,
+    "budget_vnd": 6000000,
+    "address": "51 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+    "receiver_phone": "0922209430",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-WF-RO9",
+     "price_vnd": 5990000,
+     "payment": "COD"
+    },
+    "must_say_any": [
+     "5 triệu 990",
+     "5,990,000",
+     "5.990.000",
+     "5990000",
+     "5990k",
+     "5tr990"
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 5990000,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-doc-so-hotline-dev",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "dev",
+  "customer_id": "N334",
+  "synthetic_customer": true,
+  "address": "51 Tôn Đức Thắng, Liên Chiểu, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-17"
+  },
+  "choices": {
+   "cust": "N334",
+   "p": "SKU-WF-RO9",
+   "d1": "2026-10-17"
+  },
+  "naturalized": {},
+  "template_turns": {}
+ }
+}

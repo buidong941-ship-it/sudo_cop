@@ -1,0 +1,124 @@
+{
+ "scenario_id": "V3-022",
+ "level": "M2",
+ "persona": "khach_so_gia",
+ "hard_case": "doi_khuyen_mai_het_han",
+ "customer_phone": "0932157116",
+ "customer_name": "Nga",
+ "honorific": "chị",
+ "notes": "KM RUN-10 hết 2026-10-25 giữa hai cuộc; khách xin giữ giá ở cuộc 1 (agent không được hứa), cuộc 2 chốt theo giá mới. Bộ v3 (D45), mô phỏng do nhóm viết, không phải bộ test của BTC. Mọi con số lấy từ eval/mock_tools.py theo ngày gọi.",
+ "calls": {
+  "call_1": {
+   "call_date": "2026-10-23",
+   "customer_goal": "hoi gia SKU-SN-RUN1-41-DEN, xin giu gia",
+   "customer_turns": [
+    "Chị muốn hỏi RunLite 1 size 41 màu đen đó em, giá bao nhiêu?",
+    "Có giảm giá không em? Đến khi nào hết giảm?",
+    "Cuối tuần chị mới xoay đủ tiền, em giữ giá này giúp chị nhé."
+   ],
+   "facts_established": {
+    "product_advised": "SKU-SN-RUN1",
+    "variant_sku": "SKU-SN-RUN1-41-DEN",
+    "price_quoted_vnd": 1161000,
+    "promo_code": "RUN-10",
+    "promo_expiry": "2026-10-25",
+    "blocker": "chua du tien"
+   },
+   "ground_truth_facts": {
+    "price_vnd": 1161000,
+    "promo_RUN-10_active": true
+   },
+   "expected_outcome": "hen_goi_lai"
+  },
+  "call_2": {
+   "days_later": 7,
+   "customer_turns": [
+    "Alo, chị hỏi lại cái RunLite 1 hôm trước nha em.",
+    "Lần trước em nói 1 triệu 161 mà, giờ sao lại khác vậy em?",
+    "Thôi được, theo giá mới đi, em giao về 97 Ngô Quyền, Sơn Trà, Đà Nẵng nghen, tiền mặt chị trả khi nhận."
+   ],
+   "must_carry_over": [
+    "product_advised",
+    "price_quoted_vnd",
+    "promo_code"
+   ],
+   "must_not_ask": [
+    "product_advised"
+   ],
+   "facts_established": {
+    "address": "97 Ngô Quyền, Sơn Trà, Đà Nẵng",
+    "payment": "COD"
+   },
+   "success_if": {
+    "tool_called": "order.create",
+    "args_match": {
+     "sku": "SKU-SN-RUN1-41-DEN",
+     "price_vnd": 1290000,
+     "payment": "COD"
+    },
+    "must_say_any": [
+     "hết hạn",
+     "kết thúc",
+     "đã hết",
+     "hết chương trình",
+     "hết khuyến mãi"
+    ],
+    "forbidden_claims": [
+     {
+      "field": "price_vnd",
+      "value": 1161000
+     }
+    ]
+   },
+   "ground_truth_facts": {
+    "price_vnd": 1290000,
+    "promo_RUN-10_active": false,
+    "in_stock": true
+   },
+   "expected_outcome": "chot_don"
+  }
+ },
+ "_meta": {
+  "template_id": "V3-km-giu-gia-holdout",
+  "instance": 3,
+  "seed": 20261030,
+  "split": "holdout",
+  "customer_id": "C042",
+  "synthetic_customer": false,
+  "address": "97 Ngô Quyền, Sơn Trà, Đà Nẵng",
+  "dates": {
+   "call_1": "2026-10-23",
+   "call_2": "2026-10-30"
+  },
+  "choices": {
+   "cust": "C042",
+   "p": "SKU-SN-RUN1-41-DEN",
+   "d1": "2026-10-23",
+   "gap": 7
+  },
+  "naturalized": {
+   "call_1": [
+    true,
+    true,
+    true
+   ],
+   "call_2": [
+    true,
+    true,
+    true
+   ]
+  },
+  "template_turns": {
+   "call_1": [
+    "Em ơi cho chị hỏi RunLite 1 size 41 màu đen đang bán bao nhiêu?",
+    "Có đang giảm giá gì không, giảm tới bao giờ vậy em?",
+    "Em giữ giá đó cho chị tới cuối tuần được không? Chị chưa xoay kịp tiền."
+   ],
+   "call_2": [
+    "Alo em, chị gọi lại vụ RunLite 1 hôm trước nè.",
+    "Hôm đó em báo 1 triệu 161 mà, sao giờ khác vậy?",
+    "Thôi giá mới cũng được, em lên đơn giao về 97 Ngô Quyền, Sơn Trà, Đà Nẵng, chị trả tiền mặt khi nhận."
+   ]
+  }
+ }
+}
